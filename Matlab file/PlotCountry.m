@@ -1,12 +1,30 @@
-T = readtable('quad1Results_formattato_dataCambiata_NOERROR'); %% inserire qua il csv da plottare.
+T = readtable('16474724_nuovo_formattato_dataCambiata_NOERROR'); %% inserire qua il csv da plottare.
+Country = readtable('ContryProbe.csv');
+load('corrispondenze.mat')
 G = findgroups(T{:,11});     
 Tc = splitapply( @(varargin) varargin, T, G);
-
+%% carica il file corrispondenza
+[numRows,numCols] = size(Tc)
+for p=1:numRows
+    for h=1:numRows;
+        if unique(Tc{p,11})==Corrisp{h,1}
+            Tc{h,26}=Corrisp{h,2};
+        end
+    end
+end
+Peso={}
+Tempo={}
+for b=1:numRows
+    if cell2mat(Tc{b,26}) == 'FR'
+        Peso=[Peso;cell2mat(Tc(b,23))];
+        Tempo=[Tempo;[Tc(b,15)]]
+    end
+end
 
 %% non plotta tutto ma è follia farlo cosi tanto.
-[numRows,numCols] = size(Tc)
-for j = 1:numRows
-    tabx = table(Tc{j,24},Tc{j,16});
+[Rows,Cols] = size(Tempo)
+for j = 1:Rows
+    tabx = table(Peso{j,1},Tempo{j,1});
     tab1 = sortrows(tabx,2);
     tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
     %%tab3 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
@@ -40,7 +58,8 @@ for j = 1:numRows
     
     scatter(DateCorrectFormat,y,'x');
     %%legend(num2str(h))
-    %%hold on
+    hold on
+    ylim([0 100])
     %scatter(DateCorrectFormat,z,'+');
     %% set(gca,'xticklabel',{[]})
     %% set(gca, 'YScale', 'log')
