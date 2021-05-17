@@ -5,7 +5,8 @@ import sys
 import json
 import numpy as np
 
-df=pd.read_csv('12001626_quad1_2019_formattato_dataCambiata_NOERROR_abuf.csv',parse_dates=['timestamp'])
+df1=pd.read_csv('12001626_quad1_2020_formattato_dataCambiata_NOERROR_abuf.csv',parse_dates=['timestamp'])
+df= pd.read_csv('TwoYears_12001626_join.csv',parse_dates=['timestamp'])
 #print(df['timestamp'])
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
@@ -33,10 +34,10 @@ for group in grouped:
 		probe.append(Id)
 print(probe)
 for elem in probe:
-	df= df[df['prb_id']!=elem]
+	df1= df1[df1['prb_id']!=elem]
 
 
-df.to_csv('out.csv', index=False)  
+df1.to_csv('out.csv', index=False)  
 
 
 #fa quello ceh dice cioè salva i dati che stanno per 80percent attivi nei vari bin
