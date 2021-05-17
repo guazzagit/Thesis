@@ -6,7 +6,7 @@ import json
 import numpy as np
 
 df1=pd.read_csv('12001626_quad1_2020_formattato_dataCambiata_NOERROR_abuf.csv',parse_dates=['timestamp'])
-df= pd.read_csv('TwoYears_12001626_join.csv',parse_dates=['timestamp'])
+df= pd.read_csv('TwoYears_12001626_joinGiustoQuasi.csv',parse_dates=['timestamp'])
 #print(df['timestamp'])
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
