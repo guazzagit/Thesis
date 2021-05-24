@@ -1,21 +1,21 @@
-T = readtable('16474724_nuovo_formattato_dataCambiata_NOERROR'); %% inserire qua il csv da plottare.
+T = readtable('16474724_2019_formattato_dataCambiata_NOERROR_80percent'); %% inserire qua il csv da plottare.
 Country = readtable('ContryProbe.csv');
-load('corrispondenze.mat')
+%%load('corrispondenze.mat')
 G = findgroups(T{:,11});     
 Tc = splitapply( @(varargin) varargin, T, G);
 %% carica il file corrispondenza
 [numRows,numCols] = size(Tc)
 for p=1:numRows
     for h=1:numRows;
-        if unique(Tc{p,11})==Corrisp{h,1}
-            Tc{h,26}=Corrisp{h,2};
+        if unique(Tc{p,11})==Corri{h,1}
+            Tc{h,26}=Corri{h,2};
         end
     end
 end
 Peso={}
 Tempo={}
 for b=1:numRows
-    if cell2mat(Tc{b,26}) == 'FR'
+    if cell2mat(Tc(b,26)) == 'ES'
         Peso=[Peso;cell2mat(Tc(b,23))];
         Tempo=[Tempo;[Tc(b,15)]]
     end

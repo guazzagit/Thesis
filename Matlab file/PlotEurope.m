@@ -1,14 +1,14 @@
-T = readtable('12001626_quad1_2019_formattato_dataCambiata_NOERROR_abuf.csv'); %% inserire qua il csv da plottare.
+T = readtable('23324638_ping_2020_format_dataCambiata_NOERROR_80percent.csv'); %% inserire qua il csv da plottare.
 Country = readtable('ContryProbe.csv');
 %load('corrispondenze.mat')
-G = findgroups(T{:,11});     
+G = findgroups(T{:,15});     
 Tc = splitapply( @(varargin) varargin, T, G);
 %% carica il file corrispondenza
 [numRows,numCols] = size(Tc)
 for p=1:numRows
     for h=1:numRows;
-        if unique(Tc{p,11})==Corri{h,1}
-            Tc{h,26}=Corri{h,2};
+        if unique(Tc{p,15})==Corri{h,1}
+            Tc{h,28}=Corri{h,2};
         end
     end
 end
@@ -22,13 +22,14 @@ tatto=cell(5,1)
 
 for g=1:size(Nations,2)
     for b=1:numRows
-        if cell2mat(Tc(b,26)) == Nations{1,g}
+        if cell2mat(Tc(b,28)) == Nations{1,g}
             %%Peso=[Peso;cell2mat(Tc(b,23))];
             %%Tempo=[Tempo;[Tc(b,15)]]
-            Peso=vertcat(Peso,cell2mat(Tc(b,24)))
+            Peso=vertcat(Peso,cell2mat(Tc(b,3)))
             %% la parte sotto va sistemata
-            appoggio=cell2table(Tc(b,16))
-            Tempo=cat(1,Tempo,appoggio.Var1{1,1})
+            appoggio=cell2table(Tc(b,24))
+            appoggio=table2cell(appoggio)
+            Tempo=cat(1,Tempo,appoggio{1,1})
             appoggio=[]
         end
     end
@@ -45,14 +46,14 @@ end
 
 %% non plotta tutto ma è follia farlo cosi tanto.
 [Rows,Cols] = size(tabella)
-for j = 2:Rows
+for j = 1:Rows
     tabx = table(tabella{j,1},tabella{j,2});
     tab1 = sortrows(tabx,2);
     tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
-    %%tab3 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
+    %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
     x=categorical(tab2.disc_Var2);
     y=double(tab2.median_Var1);
-    %%z= double(tab3.fun1_Var1);
+    %%y= double(tab2.fun1_Var1);
     N = length(y);
     limit = 100;
     for i = 1:N
@@ -79,18 +80,23 @@ for j = 2:Rows
     
     
     scatter(DateCorrectFormat,y,'x');
+
+    %%plot(DateCorrectFormat,y);
+
     %%legend(num2str(h))
     hold on
-    ylim([0 100])
-    %scatter(DateCorrectFormat,z,'+');
+    %%ylim([0 100])
+    %scatter(DateCorrectFormat,z,'x');
     %% set(gca,'xticklabel',{[]})
     %% set(gca, 'YScale', 'log')
     
 end
-title('Plot median')
-xlabel('2hrs Time Bins') 
-ylabel('Result(ms)') 
-legend('ES','FR','IT','SE','DE')
+ylim([0 100])
+title('Plot Median')
+xlabel('2h Time Bins') 
+ylabel('Avg_rtt(ms)') 
+legend('DE')
+set(gcf,'color','w');
 %%legend('Probe 2256','Probe 3131','Probe 3178','Probe 16100','Probe 25438','Probe 32880','Probe 50218','Probe 52490','Probe 52741','Probe 54377');
 
-export_fig('C:/Users/guazz/Desktop/myfig', '-pdf', '-png');
+export_fig('C:/Users/guazz/Desktop/plot2MEasure_23324638/23324638_2020_Median_DE', '-pdf');

@@ -9,7 +9,7 @@ Tc = splitapply( @(varargin) varargin, T, G);
 [numRows,numCols] = size(Tc)
 for p=1:numRows
     for h=1:numRows;
-        if unique(Tc{p,11})==Corri{h,1}
+        if unique(Tc{p,15})==Corri{h,1}
             Tc{h,27}=Corri{h,2};
         end
     end
@@ -60,7 +60,7 @@ for l=1:size(tatta,1)
 end
 
 contagrosso=[]
-for j = 4:4
+for j = 5:5
     tabx = table(tabella{j,1},tabella{j,2},tabella{j,3},tabella{j,4});
     tab1 = sortrows(tabx,2);
     gruppo=discretize(tab1.Var2,hours(2))
@@ -104,7 +104,7 @@ for j = 4:4
 
     
     stringa = string(x)
-    stringa2 = split(stringa,',')
+    stringa2 = split(stringa,',',2)
     iw = stringa2(:,1)
     val3 = strrep(iw,'[','')
     val23 = strrep(val3,')','')
@@ -124,8 +124,8 @@ for j = 4:4
     
 end
 ylim([0 100])
-title('Plot NSID Change & RT <SE>')
+title('Plot NSID Change & Median_RT <DE>')
 xlabel('2hrs Time Bins') 
 ylabel('Count/result') 
 legend('RT','NSID')
-export_fig('C:/Users/guazz/Desktop/myfig', '-pdf', '-png');
+export_fig('C:/Users/guazz/Desktop/plot2MEasure_12001626/12001626_2020_median_NSID_DE_scatter', '-pdf');
