@@ -7,11 +7,11 @@ import numpy as np
 
 # 20160min sono per 14giorni di bin
 
-df1=pd.read_csv('23324638_ping_2020_format_dataCambiata_OnlyERROR.csv',parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int})
-df= pd.read_csv('23324638_ping_2020_format_dataCambiata_NOERROR.csv',parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int})
-#print(df['timestamp'])
+df1=pd.read_csv('11939688_2020_format_dataCambiata_divisi_NOERROR.csv',parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
+df= pd.read_csv('TwoYears_11939688.csv',parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
+print(df)
 sort=df.sort_values('timestamp')
 TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='120min'))["group_id"].count().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
@@ -26,7 +26,7 @@ for group in grouped:
 
 	sort2["time"]=sort2.timestamp
 
-	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='120min'))["af"].median().reset_index()  #per  version no error
+	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='120min'))["fw"].median().reset_index()  #per  version no error
 	#group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].median().reset_index() # per la versione solo error
 	group2= group2.dropna() #toglie zeri
 
@@ -42,7 +42,7 @@ for elem in probe:
 	df1= df1[df1['prb_id']!=elem]
 
 
-df1.to_csv('23324638_ping_2020_format_dataCambiata_OnlyERROR_80percent.csv', index=False)  
+df1.to_csv('11939688_2020_format_dataCambiata_divisi_NOERROR_80percent_all.csv', index=False)  
 
 
 #fa quello ceh dice cioè salva i dati che stanno per 80percent attivi nei vari bin
