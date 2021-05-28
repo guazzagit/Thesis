@@ -10,12 +10,12 @@ const dash = require("lodash");
 //
 //generete urls for batchpromises
 function querygen(){
-	var url = 'https://atlas.ripe.net/api/v2/measurements/12001626/results';
+	var url = 'https://atlas.ripe.net/api/v2/measurements/'+msm_id+'/results';
 	//var url2 = 'https://atlas.ripe.net/api/v2/measurements/23848289';
 	queries =[];
-	var startTime = 1546300800;
-	var stopTime = 1546304400;  //1h = 1579296737 2h=1579300337
-	while (stopTime <=1577829600) // data messa quando ho scritto il codice1617870958   questo è tipo 2 sole query= 1579300337
+	var startTime = StrTime;
+	var stopTime = startTime+3600;  //1h = 1579296737 2h=1579300337
+	while (stopTime <=StpTime) // data messa quando ho scritto il codice1617870958   questo è tipo 2 sole query= 1579300337
 	{ 
 		var increment=3600;  //2h diff=7200 1h difference=3600
 		var NewUrl = '/?start='+startTime+'&stop='+stopTime;
@@ -40,7 +40,13 @@ function checkResponseStatus(res) {
 //_________
 
 var fs = require('fs');
-
+var argument = process.argv
+var msm_id=parseInt(argument[2]);
+var StrTime=parseInt(argument[3]);
+var StpTime=parseInt(argument[4]);
+var PercorsoOut=argument[5];
+console.log(StpTime)
+console.log(StpTime+3600)
 const urls = querygen();
 console.log(urls)
 const inParallel = 5;
@@ -49,7 +55,7 @@ const inParallel = 5;
 //fetch on each urls. inParall num of request in a batch. Urls array of items
 
 
-var logstream = fs.createWriteStream('12001626_quad1_2019.json',{flag: 'a'});
+var logstream = fs.createWriteStream(PercorsoOut,{flag: 'a'});
 
 batchPromises(inParallel, urls, i => 
       fetch(i) 
