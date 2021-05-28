@@ -1,14 +1,16 @@
 
 fs = require('fs');
-
+var argument = process.argv
+var Input=parseInt(argument[2]);
+var Output=parseInt(argument[3]);
 const lineReader = require('line-reader');
 console.log("Reorder data...");
-var fd = fs.openSync("12001626_quad1_2019_formattato.json",'a'); //per valore completto Dns23848289 per
+var fd = fs.openSync(Output,'a'); //per valore completto Dns23848289 per
 console.log("Opening a new file..");
 console.log("Start append");
 
 
-lineReader.eachLine('12001626_quad1_2019.json', function(line,last) {
+lineReader.eachLine(Input, function(line,last) {
 	var value = line.replace(/[\[\]]+/g,'');  //remove brackets
 	//var value = line.replace(/[\]]+/g,',').replace(/[\[]+/g,'')  //remove brackets
 	var stringArray = value.split(",{"); // divide 
