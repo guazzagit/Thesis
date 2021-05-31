@@ -4,19 +4,17 @@ import csv
 import sys
 import json
 import numpy as np
-
+Input = sys.argv[1]
+Output = sys.argv[2]
 
 def extract_time(json):
     try:
-        # Also convert to int since update_time will be string.  When comparing
-        # strings, "10" is smaller than "2".
-        #print((json['timestamp']))
         return(datetime.strptime(json['timestamp'], '%Y-%m-%d %H:%M:%S'))
     except KeyError:
         return 0
 
 
-with open('C:/Users/guazz/Desktop/JSON_Elab/test_in.json', 'r') as unordered, open('C:/Users/guazz/Desktop/JSON_Elab/out.json', 'a') as out:
+with open(Input, 'r') as unordered, open(Output, 'a') as out:
 	lines = []
 	for line in unordered:
 	    json_obj = json.loads(line)

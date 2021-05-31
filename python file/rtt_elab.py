@@ -5,8 +5,11 @@ import sys
 import json
 import numpy as np
 
+Input = sys.argv[1]
+Output = sys.argv[2]
+#reduction for failure rate in ping measurement.
 # 20160min sono per 14giorni di bin
-with open('24104774_ping_2020_format_dataCambiata.json','r') as f, open('24104774_ping_2020_format_dataCambiata_errorRate.json','a') as out:
+with open(Input,'r') as f, open(Output,'a') as out:
 	for line in f:
 		decoded = json.loads(line)
 		error=0
@@ -26,22 +29,3 @@ with open('24104774_ping_2020_format_dataCambiata.json','r') as f, open('2410477
 		out.write(json_dump)
 		out.write('\n')
 
-
-#		count=0
-#		lunghezza=1
-#		if "error" in decoded["result"]:
-#			count=1
-#		else:
-##			lunghezza=len(decoded["result"])
-#			for i in range(lunghezza):
-##
-#				if "rtt" in decoded["result"][i]:
-#					count+=0
-#				else:
-#					count+=1
-#
-#		decoded["result"]=count/lunghezza*100
-#		print(decoded)
-#		out.write(json.dumps(decoded))
-#		out.write('\n')
-#		count=0

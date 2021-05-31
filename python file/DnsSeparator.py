@@ -1,7 +1,14 @@
 import json
+import sys
+
+Input_1 = sys.argv[1]
+Output_1 = sys.argv[2] # internal dns
+Output_2 = sys.argv[3] # dhcp dns
+Output_3 = sys.argv[4] # external dns
+
 
 # Divide in 3 resolver type
-with open('DnsMeasures.txt', 'r') as json_file, open('InternalDNS.txt', 'w') as outfile1, open('DHCpDNS.txt', 'w') as outfile2, open('ExternalDNS.txt', 'w') as outfile3:
+with open(Input_1, 'r') as json_file, open(Output_1, 'w') as outfile1, open(Output_2, 'w') as outfile2, open(Output_3, 'w') as outfile3:
     for line in json_file:
         decoded = json.loads(line)
         # if true use resolver is inside the probe resolve_on_probe e use_probe_resolver sono a true

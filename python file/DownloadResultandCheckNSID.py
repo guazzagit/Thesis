@@ -19,6 +19,11 @@ from ripe.atlas.sagan import DnsResult
 
 # 1/01/2020 1:00:00  ==== 1577836800
 # 31/12/2020 23:45:00 ==== 1609454700
+
+Input = sys.argv[1] # measure to check if NSID is present
+Output = sys.argv[2] # results of ms where NSID is present
+
+
 def requestfunction(interval, start, stop, MesId):
 	stopCondition = 1609454700
 	print(interval)
@@ -51,7 +56,7 @@ def requestfunction(interval, start, stop, MesId):
 
 
 
-with open('8844Results.json', 'a') as f, open('8844measure.json', 'r') as test:
+with open(Output, 'a') as f, open(Input, 'r') as test:
 
 	for elem in test:
 		prova = json.loads(elem)

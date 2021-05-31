@@ -4,11 +4,14 @@ import csv
 import sys
 import json
 import numpy as np
-
+# save data for probes that are 80% active in 2019/2020
 # 20160min sono per 14giorni di bin
+Input_Base = sys.argv[1]
+Input_twoYears = sys.argv[2]
+Output = sys.argv[3]
 
-df1=pd.read_csv('11939688_2020_format_dataCambiata_divisi_NOERROR.csv',parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
-df= pd.read_csv('TwoYears_11939688.csv',parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
+df1=pd.read_csv(Input_Base,parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
+df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 print(df)
@@ -42,7 +45,7 @@ for elem in probe:
 	df1= df1[df1['prb_id']!=elem]
 
 
-df1.to_csv('11939688_2020_format_dataCambiata_divisi_NOERROR_80percent_all.csv', index=False)  
+df1.to_csv(Output, index=False)  
 
 
 #fa quello ceh dice cioè salva i dati che stanno per 80percent attivi nei vari bin
