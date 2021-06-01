@@ -20,7 +20,7 @@ lineReader.eachLine(Input, function(line,last) {
 	var stringArray = value4.split(",{"); // divide 
 	let text = stringArray.join('\n{')+"\n"; // new line and add the lost bracket
 	var text2=text.replace(/\}\{+/g,'},{')
-	console.log(text2);
+	//console.log(text2);
 	fs.appendFile(fd, text2, function(err) {
 
 		if(err) {
