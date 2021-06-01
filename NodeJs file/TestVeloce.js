@@ -1,5 +1,6 @@
 
 fs = require('fs');
+es= require('event-stream')
 var argument = process.argv
 var Input=argument[2];
 var Output=argument[3];
@@ -10,15 +11,11 @@ var fd = fs.openSync(Output,'a'); //per valore completto Dns23848289 per
 console.log("Opening a new file..");
 console.log("Start append");
 // c'è il campo resultset devi sta attento a quello qua 
-var str = fs.readFileSync(Input, 'utf8'); // This will block the event loop, not recommended for non-cli programs.
+var str = fs.createReadStream(Input)
+//var str = fs.readFileSync(Input, 'utf8'); // This will block the event loop, not recommended for non-cli programs.
 //console.log('result read: ' + str);
-
-
-//lineReader.eachLine(Input, function(line,last) {
-	//var value = line.replace(/[\[\]]+/g,'');  //remove brackets
-	//var value = line.substring(1, line.length-1);
-	//var value = line.replace(/[\]]+/g,',').replace(/[\[]+/g,'')  //remove brackets
-	var value2= str.replace(/\},\{"af"+/g,'}{"af"')
+str.on('data', function (chunk) {
+    var value2= chunk.toString().replace(/\},\{"af"+/g,'}{"af"')
 	var value3= value2.replace(/\},\{"dst_name"+/g,'}{"dst_name"')
 	var value4= value3.replace(/\},\{"time"+/g,'}{"time"')
 	var stringArray = value4.split(",{"); // divide 
@@ -31,5 +28,11 @@ var str = fs.readFileSync(Input, 'utf8'); // This will block the event loop, not
 	    return console.log(err);
 		}
 	);
+
+});
+//lineReader.eachLine(Input, function(line,last) {
+	//var value = line.replace(/[\[\]]+/g,'');  //remove brackets
+	//var value = line.substring(1, line.length-1);
+	//var value = line.replace(/[\]]+/g,',').replace(/[\[]+/g,'')  //remove brackets
 
 //});
