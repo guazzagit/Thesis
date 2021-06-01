@@ -1,13 +1,14 @@
 fs = require('fs');
 var argument = process.argv
-var Input=parseInt(argument[2]);
-var Output=parseInt(argument[3]);
+var Input=argument[2];
+var Output=argument[3];
 const editJsonFile = require("edit-json-file");
+
+const readline = require('readline');
 var dateFormat = require("dateformat");
 const lineReader = require('line-reader');
 console.log("DATA SELECTION");
 
-ProbeId = [2256,3131,3178,16100,25438,32880,50218,52490,54377,52741]
 
 var fd_error = fs.openSync(Output,'a');
 //var fd_Probe = fs.openSync("./Dns23848289_PRobe_52741_noError.json",'a');
@@ -15,20 +16,31 @@ console.log("Opening a new file..");
 console.log("Start append");
 
 
-lineReader.eachLine(Input, function(line,last) {
-	
-	var obj = JSON.parse(line);
-// per la versione completa senza errori o solo error
-	if(!obj.result){
-		var med = JSON.stringify(obj);
-		var text = med +"\n"; // non va bene se lo porti in stringa poi da problemi per plottarli
-		fs.appendFile(fd_error, text, function(err) {
+    const rl = readline.createInterface({
+      input: fs.createReadStream(Input),
+      crlfDelay: Infinity,
+    });
+    writer=fs.createWriteStream(Output);
+    rl.on('line', (line) => {
+      // Gets line and splits it by " - " where the ip is the first value
+		var obj = JSON.parse(line);
+		// per la versione completa senza errori o solo error
+			if(obj.resultset.result){
+				
+				var med = JSON.stringify(obj);
+				var text = med +"\n"; // non va bene se lo porti in stringa poi da problemi per plottarli
+				writer.write(text)
+				}
+		
+      //writer.write(text)
+      //console.log("write")
+    });
 
-			if(err) {
-			    return console.log(err);
-			}
-		});
-		}
+    rl.on('close', () => {
+      writer.end()
+    });
+	
+	
 	// singole probe. automatizza poi per far prima.	
 /*	if(obj.result && obj.prb_id == ProbeId[9]){
 		var med = JSON.stringify(obj);
@@ -40,5 +52,3 @@ lineReader.eachLine(Input, function(line,last) {
 			}
 		});
 		}*/
-
-});
