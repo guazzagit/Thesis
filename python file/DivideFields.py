@@ -13,7 +13,7 @@ with open(Input,'r') as f, open(Output,'a') as out:
 
 		for i in range(0, leng):
 			elem=data.copy()
-			print(elem["resultset"][i])
+			#print(elem["resultset"][i])
 			string= elem["resultset"][i]
 			elem.pop("resultset")
 			elem["resultset"] = string

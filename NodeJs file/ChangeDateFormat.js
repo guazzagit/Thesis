@@ -1,9 +1,10 @@
 
 fs = require('fs');
 var argument = process.argv
-var Input=parseInt(argument[2]);
-var Output=parseInt(argument[3]);
+var Input=argument[2];
+var Output=argument[3];
 const editJsonFile = require("edit-json-file");
+const readline = require('readline');
 var dateFormat = require("dateformat");
 // If the file doesn't exist, the content will be an empty object by default.
 
@@ -13,32 +14,39 @@ var fd = fs.openSync(Output,'a'); //per valore completto Dns23848289 per test = 
 console.log("Opening a new file..");
 console.log("Start append");
 
+    const rl = readline.createInterface({
+      input: fs.createReadStream(Input),
+      crlfDelay: Infinity,
+    });
+    writer=fs.createWriteStream(Output);
+    rl.on('line', (line) => {
+      // Gets line and splits it by " - " where the ip is the first value
+		var obj = JSON.parse(line);
+		//console.log(obj.timestamp);
+		var milliseconds = obj.timestamp * 1000;
+		var dateObject = new Date(milliseconds)
+		//var humanDateFormat = dateObject.toLocaleString('en-GB') //2019-12-9 10:30:15
+		//console.log(humanDateFormat)
+		//obj.timestamp = humanDateFormat;
+		var appo = dateFormat(dateObject, "yyyy-mm-dd HH:MM:ss");
+		obj.timestamp =appo;
+		//console.log(appo);
+		//console.log(obj.timestamp);
+		var med = JSON.stringify(obj);
 
-lineReader.eachLine(Input, function(line,last) {
-	
-	var obj = JSON.parse(line);
-	//console.log(obj.timestamp);
-	var milliseconds = obj.timestamp * 1000;
-	var dateObject = new Date(milliseconds)
-	//var humanDateFormat = dateObject.toLocaleString('en-GB') //2019-12-9 10:30:15
-	//console.log(humanDateFormat)
-	//obj.timestamp = humanDateFormat;
-	var appo = dateFormat(dateObject, "yyyy-mm-dd HH:MM:ss");
-	obj.timestamp =appo;
-	//console.log(appo);
-	//console.log(obj.timestamp);
-	var med = JSON.stringify(obj);
+		//console.log(med);
+		//var stringArray = med.split("}{"); // divide 
+		//console.log(stringArray);
+		//let text = stringArray.join() +"\n"; // new line and add the lost bracket
+		var text = med +"\n"; // non va bene se lo porti in stringa poi da problemi per plottarli
+			
+      	const result = {
+// object with data inside
+      };
+      writer.write(text)
+      //console.log("write")
+    });
 
-	//console.log(med);
-	//var stringArray = med.split("}{"); // divide 
-	//console.log(stringArray);
-	//let text = stringArray.join() +"\n"; // new line and add the lost bracket
-	var text = med +"\n"; // non va bene se lo porti in stringa poi da problemi per plottarli
-	fs.appendFile(fd, text, function(err) {
-
-		if(err) {
-		    return console.log(err);
-		}
-	});
-
-});
+    rl.on('close', () => {
+      writer.end()
+    });
