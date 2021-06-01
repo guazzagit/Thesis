@@ -52,11 +52,11 @@ end
 for j = 1:Rows
     tabx = table(tabella{j,1},tabella{j,2});
     tab1 = sortrows(tabx,2);
-    tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
-    %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
+    %%tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
+    tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
     x=categorical(tab2.disc_Var2);
-    y=double(tab2.median_Var1);
-    %%y= double(tab2.fun1_Var1);
+    %%y=double(tab2.median_Var1);
+    y= double(tab2.fun1_Var1);
     N = length(y);
     limit = 100;
     for i = 1:N
@@ -75,12 +75,12 @@ for j = 1:Rows
     figure('Visible', 'off')
     scatter(DateCorrectFormat,y,'x');
     ylim([0 100])
-    title('Plot Median')
+    title('Plot 90 Percent')
     xlabel('2h Time Bins') 
     ylabel('Result(ms)') 
     legend(Nations{j})
     set(gcf,'color','w');
-    fname = sprintf('%s_%s_Median_%s', FileOut{1},FileOut{3},Nations{j});
+    fname = sprintf('%s_%s_90Perc_%s', FileOut{1},FileOut{3},Nations{j});
     export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
 
     

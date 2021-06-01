@@ -14,8 +14,9 @@ function querygen(){
 	//var url2 = 'https://atlas.ripe.net/api/v2/measurements/23848289';
 	queries =[];
 	var startTime = StrTime;
-	var stopTime = startTime+3600;  //1h = 1579296737 2h=1579300337
-	while (stopTime <=StpTime) // data messa quando ho scritto il codice1617870958   questo è tipo 2 sole query= 1579300337
+	var stopTime = parseInt(startTime)+3600;  //1h = 1579296737 2h=1579300337
+	console.log(stopTime)
+	while (stopTime <=parseInt(StpTime)) // data messa quando ho scritto il codice1617870958   questo è tipo 2 sole query= 1579300337
 	{ 
 		var increment=3600;  //2h diff=7200 1h difference=3600
 		var NewUrl = '/?start='+startTime+'&stop='+stopTime;
@@ -41,12 +42,14 @@ function checkResponseStatus(res) {
 
 var fs = require('fs');
 var argument = process.argv
-var msm_id=parseInt(argument[2]);
-var StrTime=parseInt(argument[3]);
-var StpTime=parseInt(argument[4]);
+var msm_id=argument[2];
+var StrTime=argument[3];
+var StpTime=argument[4];
 var PercorsoOut=argument[5];
+console.log(msm_id)
+console.log(StrTime)
 console.log(StpTime)
-console.log(StpTime+3600)
+console.log(PercorsoOut)
 const urls = querygen();
 console.log(urls)
 const inParallel = 5;
