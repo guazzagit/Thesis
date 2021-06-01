@@ -34,7 +34,7 @@ console.log("Start append");
 // object with data inside
       };
       writer.write(text2)
-      console.log("write")
+      //console.log("write")
     });
 
     rl.on('close', () => {
