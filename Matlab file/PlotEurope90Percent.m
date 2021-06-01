@@ -1,12 +1,13 @@
-function[] = PlotEurope(param1,param2)
+function[] = PlotEurope90Percent(param1,param2)
+
 T = readtable(param1); %% inserire qua il csv da plottare.
 Country = readtable('ContryProbe.csv');
 load(param2) %% caricamento file di corrispondenza paesi probe
 G = findgroups(T{:,15});     
 Tc = splitapply( @(varargin) varargin, T, G);
-FileOut= split(param1,"_")
-fname = sprintf('%s_%s_Median_All', FileOut{1},FileOut{3});
 
+FileOut= split(param1,"_")
+fname = sprintf('%s_%s_90Perc_All', FileOut{1},FileOut{3});
 
 %% carica il file corrispondenza
 [numRows,numCols] = size(Tc)
@@ -54,11 +55,11 @@ end
 for j = 1:Rows
     tabx = table(tabella{j,1},tabella{j,2});
     tab1 = sortrows(tabx,2);
-    tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
-    %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
+    %%tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
+    tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
     x=categorical(tab2.disc_Var2);
-    y=double(tab2.median_Var1);
-    %%y= double(tab2.fun1_Var1);
+    %%y=double(tab2.median_Var1);
+    y= double(tab2.fun1_Var1);
     N = length(y);
     limit = 100;
     for i = 1:N
@@ -96,11 +97,12 @@ for j = 1:Rows
     
 end
 ylim([0 100])
-title('Plot Median')
+title('Plot 90 Percentile')
 xlabel('2h Time Bins') 
 ylabel('Result(ms)') 
 legend('ES','FR','IT','SE','DE')
 set(gcf,'color','w');
 
 export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+disp(param1)
 end

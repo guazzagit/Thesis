@@ -1,6 +1,12 @@
-T = readtable('23324638_ping_2020_format_dataCambiata_80percent_all.csv'); %% inserire qua il csv da plottare.
-G = findgroups(T{:,15});     
-%Country = readtable('ContryProbe.csv');
+function[]= PlotErrorPing(param1, param2)
+T = readtable(param1); %% inserire qua il csv da plottare.
+G = findgroups(T{:,15});
+
+FileOut= split(param1,"_")
+fname = sprintf('%s_%s_Error_All', FileOut{1},FileOut{3});
+
+load(param2) %% caricamento file di corrispondenza paesi probe
+Country = readtable('ContryProbe.csv');
 Tc = splitapply( @(varargin) varargin, T, G);
 [numRows,numCols] = size(Tc);
 arrayTempo=[]
@@ -60,9 +66,8 @@ for g=1:size(Nations,2)
 end
 
 
-
 [Rows,Cols] = size(tabella)
-for j = 1:1
+for j = 1:Rows
     tabx = table(tabella{j,1},tabella{j,2},tabella{j,3},tabella{j,4});
     tab1 = sortrows(tabx,2);
     array=table2array(tab1(:,1))
@@ -76,7 +81,7 @@ for j = 1:1
     for i=1:size(ids,1)
         tab1.Var1(ids(i,1))=(array2(ids(i,1),1)-array1(ids(i,1),1))/array2(ids(i,1),1)*100
     end
-    Var_Count = groupsummary(tab1,'Var2',hours(336),'mean','Var1'); %% raggruppa e calcola il metodo/funzione che gli si passa.
+    Var_Count = groupsummary(tab1,'Var2',hours(2),'mean','Var1'); %% raggruppa e calcola il metodo/funzione che gli si passa.
 
     time = Var_Count.disc_Var2;
     count = Var_Count.mean_Var1;
@@ -101,11 +106,37 @@ for j = 1:1
     %% per riempire i missing value
  
     
+
+    datenumb= datenum(DateCorrectFormat) % converto dat e in numeri
+    datenumb=datenumb.'
+    difference= diff([0 datenumb]) % differenza tra elementi
+    difference=difference*24*60 % lo porto in formato migliore
+    difference2=difference/2 % cosi divido per 6 ore cosi num come 1 ecc ho 
+    vuoto=find(difference2 > 120) % trovo le differenze cioÃ¨ le posizioni
+
+    NewDate= DateCorrectFormat.'
+    valori= difference2(difference2>120)
+    dimensione=size(vuoto,2)
+    NewCount=count.'
+    
+    for v=2:dimensione
+        xnat=NaT(1,round(valori(v)))
+        xnan=NaN(1,round(valori(v)))
+        NewDate= [NewDate(1:round(vuoto(v))-1) xnat NewDate(round(vuoto(v)):size(NewDate,2))]
+        NewCount=[NewCount(1:round(vuoto(v))-1) xnan NewCount(round(vuoto(v)):size(NewCount,2))]
+        vuoto=vuoto+valori(v)
+
+    end
+    NewDate=NewDate.'
+    NewCount=NewCount.'
+
+    
+    plot(NewDate,NewCount)
     %%grammo=zeros(size(DateCorrectFormat,1),1)
     %% cambia in scatter che si vede meglio e metti i bin più grossi.
     %% puoi fa pure i plot classici.
     %scatter(DateCorrectFormat,count,'x')
-    plot(DateCorrectFormat,count)
+    %%plot(DateCorrectFormat,count)
     hold on
 end
 
@@ -114,5 +145,6 @@ title('Plot Error')
 xlabel('2hrs Time Bins') 
 ylabel('Mean Error(%)') 
 set(gcf,'color','w');
-legend('DE')
-export_fig('C:/Users/guazz/Desktop/Correzione Plot/23324638_2020_Error_DE', '-pdf');
+legend('ES','FR','IT','SE','DE')
+export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+end

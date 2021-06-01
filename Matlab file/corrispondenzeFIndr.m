@@ -1,10 +1,10 @@
 %% associa regione al probe_id
-
-T = readtable('23324638_ping_2020_format_dataCambiata_OnlyERROR_80percent.csv'); %% inserire qua il csv da plottare.
-     
+function[] = corrispondenzeFIndr(Param1)
+T = readtable(Param1); %% inserire qua il csv da caricare
 Country = readtable('ContryProbe.csv');
 [numRows,numCols] = size(Country)
-
+FileOut= split(param1,"_")
+fname = sprintf('Corrispondenza_%s_%s.mat', FileOut{1},FileOut{3});
 prb_id= unique(T{:,15})
 [Rows,Cols] = size(prb_id)
 for p=1:Rows
@@ -15,4 +15,6 @@ for p=1:Rows
             Corri{p,2}=valore{1,1};
         end
     end
+end
+save([Filename],'close')
 end
