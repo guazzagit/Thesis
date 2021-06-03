@@ -10,7 +10,6 @@ with open(Input,'r') as f, open(Output,'a') as out:
 		for line in f:
 			try:
 				data = json.loads(line)
-				#print(data)
 				leng = len(data["resultset"])
 
 				for i in range(0, leng):
