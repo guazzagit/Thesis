@@ -17,7 +17,7 @@ with open(Input,'r') as f, open(Output, 'a',newline='') as out:
     for line in f:
         x= json.loads(line)
         if "result" not in x["resultset"]:
-            y=0
+            y=float("NaN")
         else:
             y=x["resultset"]["result"]["rt"]
 
