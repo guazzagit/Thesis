@@ -16,7 +16,7 @@ with open(Input,'r') as f, open(Output, 'a',newline='') as out:
     y=0
     for line in f:
         x= json.loads(line)
-        if "result" in x["resultset"]:
+        if "result" not in x["resultset"]:
             y=0
         else:
             y=x["resultset"]["result"]["rt"]
