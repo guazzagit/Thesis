@@ -13,8 +13,14 @@ fieldnames = ['prb_id','timestamp','resultset.result.rt']
 with open(Input,'r') as f, open(Output, 'a',newline='') as out:
     new = csv.writer(out)
     new.writerow(fieldnames)
+    y=0
     for line in f:
         x= json.loads(line)
-        new.writerow([x["prb_id"],x["timestamp"],x["resultset"]["result"]["rt"]])
+        if "result" in x["resultset"]:
+            y=0
+        else:
+            y=x["resultset"]["result"]["rt"]
+
+        new.writerow([x["prb_id"],x["timestamp"],y])
 
 print("CSV DONE")
