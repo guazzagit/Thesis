@@ -16,7 +16,7 @@ df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 print(df)
 sort=df.sort_values('timestamp')
-TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='120min'))["group_id"].count().size # numero totale di timebins di 2h per dati senza errori
+TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min')).count().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
 print(TimeBins)
 grouped = sort.groupby(sort.prb_id)
@@ -29,7 +29,7 @@ for group in grouped:
 
 	sort2["time"]=sort2.timestamp
 
-	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='120min'))["fw"].median().reset_index()  #per  version no error
+	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().reset_index()  #per  version no error
 	#group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].median().reset_index() # per la versione solo error
 	group2= group2.dropna() #toglie zeri
 

@@ -12,8 +12,8 @@ fname = sprintf('%s_%s_Median_All', FileOut{1},FileOut{2});
 [numRows,numCols] = size(Tc)
 for p=1:numRows
     for h=1:numRows;
-        if unique(Tc{p,15})==Corri{h,1}
-            Tc{h,28}=Corri{h,2};
+        if unique(Tc{p,1})==Corri{h,1}
+            Tc{h,5}=Corri{h,2};
         end
     end
 end
@@ -27,12 +27,12 @@ tatto=cell(5,1)
 
 for g=1:size(Nations,2)
     for b=1:numRows
-        if cell2mat(Tc(b,28)) == Nations{1,g}
+        if cell2mat(Tc(b,5)) == Nations{1,g}
             %%Peso=[Peso;cell2mat(Tc(b,23))];
             %%Tempo=[Tempo;[Tc(b,15)]]
             Peso=vertcat(Peso,cell2mat(Tc(b,3)))
             %% la parte sotto va sistemata
-            appoggio=cell2table(Tc(b,24))
+            appoggio=cell2table(Tc(b,2))
             appoggio=table2cell(appoggio)
             Tempo=cat(1,Tempo,appoggio{1,1})
             appoggio=[]
@@ -54,7 +54,7 @@ end
 for j = 1:Rows
     tabx = table(tabella{j,1},tabella{j,2});
     tab1 = sortrows(tabx,2);
-    tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
+    tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
     %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
     x=categorical(tab2.disc_Var2);
     y=double(tab2.median_Var1);
@@ -97,7 +97,7 @@ for j = 1:Rows
 end
 ylim([0 100])
 title('Plot Median')
-xlabel('2h Time Bins') 
+xlabel('4h Time Bins') 
 ylabel('Result(ms)') 
 legend('ES','FR','IT','SE','DE')
 set(gcf,'color','w');
