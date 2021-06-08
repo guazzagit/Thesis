@@ -10,13 +10,7 @@ fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{2});
 
 %% carica il file corrispondenza
 [numRows,numCols] = size(Tc)
-for p=1:numRows
-    for h=1:numRows;
-        if unique(Tc{p,1})==Corri{h,1}
-            Tc{h,5}=Corri{h,2};
-        end
-    end
-end
+Tc(:,5)=Corri(:,2)
 Nations={'ES','FR','IT','SE','DE'}
 
 Peso=[]
