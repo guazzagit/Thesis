@@ -22,7 +22,7 @@ print(TimeBins)
 grouped = sort.groupby(sort.prb_id)
 probe=[]
 
-print(grouped.size())
+#print(grouped.size())
 for group in grouped:
 
 	sort2= group[1].sort_values('timestamp')
@@ -37,7 +37,7 @@ for group in grouped:
 	
 	countPerProbe = group2["timestamp"].size
 	perc = (np.divide(countPerProbe,TimeBins))*100
-	print(perc)
+	#print(perc)
 	if perc < 80:
 		probe.append(Id)
 print(probe)
