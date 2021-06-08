@@ -82,7 +82,7 @@ for j = 1:Rows
         legend(Nations{j})
         set(gcf,'color','w');
         fname = sprintf('%s_%s_Median_%s', FileOut{1},FileOut{3},Nations{j});
-        export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+        export_fig(['/plot/' fname], '-pdf');
     end
     
 end
