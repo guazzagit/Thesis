@@ -5,7 +5,7 @@ load(param2) %% caricamento file di corrispondenza paesi probe
 G = findgroups(T{:,1});     
 Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
-%fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{3});
+fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{2});
 
 
 %% carica il file corrispondenza
