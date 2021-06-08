@@ -15,5 +15,5 @@ for p=1:Rows
     Corri{p,2}=valore{1,1};
 
 end
-save([Filename],'close')
+save(fname, "Corri")
 end
