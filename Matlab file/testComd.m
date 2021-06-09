@@ -7,5 +7,5 @@ function[] = TaskTest(param1)
     figure('Visible', 'off')
     scatter(1,1,'x');
     drawnow()
-   export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+   export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot' fname], '-pdf');
 end
