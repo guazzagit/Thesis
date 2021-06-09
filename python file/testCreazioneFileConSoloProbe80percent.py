@@ -11,7 +11,7 @@ Input_twoYears = sys.argv[2]
 Output = sys.argv[3]
 
 df1=pd.read_csv(Input_Base,parse_dates=['timestamp'])
-df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'],)
+df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'])
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 #print(df)
