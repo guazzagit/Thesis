@@ -6,6 +6,5 @@ function[] = TaskTest(param1)
     set(gcf, 'Visible', 'off');
     figure('Visible', 'off')
     scatter(1,1,'x');
-    drawnow()
    export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
 end
