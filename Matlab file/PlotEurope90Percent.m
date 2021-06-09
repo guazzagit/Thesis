@@ -7,7 +7,7 @@ G = findgroups(T{:,1});
 Tc = splitapply( @(varargin) varargin, T, G);
 
 FileOut= split(param1,"_")
-fname = sprintf('%s_%s_90Perc_All', FileOut{1},FileOut{3});
+fname = sprintf('%s_%s_90Perc_All', FileOut{1},FileOut{2});
 
 %% carica il file corrispondenza
 [numRows,numCols] = size(Tc)
@@ -104,5 +104,5 @@ ylabel('Result(ms)')
 legend('ES','FR','IT','SE','DE')
 set(gcf,'color','w');
 
-export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
 end

@@ -5,7 +5,7 @@ load(param2) %% caricamento file di corrispondenza paesi probe
 G = findgroups(T{:,1});     
 Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
-fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{2});
+%%fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{2});
 
 
 %% carica il file corrispondenza
@@ -75,8 +75,8 @@ for j = 1:Rows
         ylabel('Result(ms)') 
         legend(Nations{j})
         set(gcf,'color','w');
-        fname = sprintf('%s_%s_Median_%s', FileOut{1},FileOut{3},Nations{j});
-        export_fig(['/plot/' fname], '-pdf');
+        fname = sprintf('%s_%s_Median_%s', FileOut{1},FileOut{2},Nations{j});
+        export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
     end
     
 end

@@ -83,7 +83,7 @@ for j = 1:Rows
         legend(Nations{j})
         set(gcf,'color','w');
         fname = sprintf('%s_%s_90Perc_%s', FileOut{1},FileOut{3},Nations{j});
-        export_fig(['/plot/' fname], '-pdf');
+        export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
     end
 
 end
