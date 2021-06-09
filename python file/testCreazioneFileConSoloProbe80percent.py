@@ -10,13 +10,13 @@ Input_Base = sys.argv[1]
 Input_twoYears = sys.argv[2]
 Output = sys.argv[3]
 
-df1=pd.read_csv(Input_Base,parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
-df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
+df1=pd.read_csv(Input_Base,parse_dates=['timestamp'])
+df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'],)
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 #print(df)
 sort=df.sort_values('timestamp')
-TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
+TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
 print(TimeBins)
 grouped = sort.groupby(sort.prb_id)
@@ -29,7 +29,7 @@ for group in grouped:
 
 	#sort2["time"]=sort2.timestamp
 	#print(sort2)
-	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["result.rt"].median().reset_index()  #per  version no error
+	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().reset_index()  #per  version no error
 	#group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].median().reset_index() # per la versione solo error
 	group2= group2.dropna() #toglie zeri
 
