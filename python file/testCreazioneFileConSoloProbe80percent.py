@@ -10,13 +10,13 @@ Input_Base = sys.argv[1]
 Input_twoYears = sys.argv[2]
 Output = sys.argv[3]
 
-df1=pd.read_csv(Input_Base,parse_dates=['timestamp'])
-df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'])
+df1=pd.read_csv(Input_Base,parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
+df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'],dtype={'mver': str, 'result.size': int, 'resultset.time': int, 'resultset.error.socket':str, 'resultset.error.nameserver':str, 'resultset.dst_name': str, 'resultset.name':str})
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 #print(df)
 sort=df.sort_values('timestamp')
-TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
+TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
 print(TimeBins)
 grouped = sort.groupby(sort.prb_id)
@@ -27,24 +27,32 @@ for group in grouped:
 
 	sort2= group[1].sort_values('timestamp')
 
-	sort2["time"]=sort2.timestamp
-
-	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().reset_index()  #per  version no error
+	#sort2["time"]=sort2.timestamp
+	#print(sort2)
+	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["result.rt"].median().reset_index()  #per  version no error
 	#group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].median().reset_index() # per la versione solo error
 	group2= group2.dropna() #toglie zeri
 
 	Id=pd.unique(sort2["prb_id"])[0]
 	
 	countPerProbe = group2["timestamp"].size
+	#print(group2)
 	#print(countPerProbe)
 	perc = (np.divide(countPerProbe,TimeBins))*100
 	#print(perc)
 	if perc < 80:
 		probe.append(Id)
 print(probe)
+del df
+del sort2
+del sort
+del group2
+del grouped
 for elem in probe:
-	df1[df1['prb_id']!=elem]
-
+	#df1=df1[df1['prb_id']!=elem]
+	df1.drop(df1[df1['prb_id'] == elem].index, inplace=True)
+	#df1 = df1.drop([df1['prb_id']==elem].index)
+#df1.drop("Unnamed: 0",axis=1, inplace=True)
 
 df1.to_csv(Output, index=False)  
 
