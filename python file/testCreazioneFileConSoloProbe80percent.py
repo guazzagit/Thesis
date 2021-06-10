@@ -15,6 +15,7 @@ df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'])
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 #print(df)
+
 sort=df.sort_values('timestamp')
 TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
@@ -34,7 +35,7 @@ for group in grouped:
 	group2= group2.dropna() #toglie zeri
 
 	Id=pd.unique(sort2["prb_id"])[0]
-	
+
 	countPerProbe = group2["timestamp"].size
 	#print(group2)
 	#print(countPerProbe)
@@ -43,6 +44,7 @@ for group in grouped:
 	if perc < 80:
 		probe.append(Id)
 print(probe)
+
 del df
 del sort2
 del sort
