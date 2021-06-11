@@ -38,9 +38,9 @@ for group in grouped:
 
 	countPerProbe = group2["timestamp"].size
 	#print(group2)
-	#print(countPerProbe)
+	print(countPerProbe)
 	perc = (np.divide(countPerProbe,TimeBins))*100
-	#print(perc)
+	print(perc)
 	if perc < 80:
 		probe.append(Id)
 print(probe)
