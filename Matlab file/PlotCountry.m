@@ -5,47 +5,55 @@ load(param2) %% caricamento file di corrispondenza paesi probe
 G = findgroups(T{:,1});     
 Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
-%%fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{2});
+%fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{3});
 
 
-%% carica il file corrispondenza
-[numRows,numCols] = size(Tc)
-Tc(:,5)=Corri(:,2)
+%% carica il file corrispondenza non serve più questo
+%[numRows,numCols] = size(Tc)
+%for p=1:numRows
+ %   for h=1:numRows;
+ %       if unique(Tc{p,1})==Corri{h,1}
+ %%           Tc{h,5}=Corri{h,2};
+  %      end
+ %   end
+%end
+%% cancella fin qui
 Nations={'ES','FR','IT','SE','DE'}
+Nations2=["ES" "FR" "IT" "SE" "DE"]
+Tc(:,5)=Corri(:,2) % forse cosi posso assegnare diretto le corrispondenze...
 
-Peso=[]
-Tempo=[]
-appoggio=[]
-tabella=cell(5,2)
-tatto=cell(5,1)
 
-for g=1:size(Nations,2)
+tabellaTempi=cell(5,1)
+tabellaPesi=cell(5,1)
+parfor g=1:size(Nations,2)
+    singlerow=cell(1,2)
+    tabellaTempo=[]
+    tabellaPeso=[]
     for b=1:numRows
-        if cell2mat(Tc(b,5)) == Nations{1,g}
-            %%Peso=[Peso;cell2mat(Tc(b,3))];
-            %%Tempo=[Tempo;[Tc(b,15)]]
-            Peso=vertcat(Peso,cell2mat(Tc(b,3)))
-            %% la parte sotto va sistemata
-            appoggio=cell2table(Tc(b,2))
-            appoggio=table2cell(appoggio)
-            Tempo=cat(1,Tempo,appoggio{1,1})
-            appoggio=[]
+        
+        if cell2mat(Tc(b,5)) == Nations{g}
+
+            singlerow{1,1}=cell2mat(Tc(b,3))
+            singlerow{1,2}=Tc{b,2}
+            %appoggio=[]
+            tabellaPeso=[tabellaPeso;singlerow{1}]
+            tabellaTempo=[tabellaTempo;singlerow{2}]
         end
+
     end
-    tabella{g,1}=Peso
-    Peso=[];
-    tabella{g,2}=Tempo
-    Tempo=[]
+    tabellaPesi{g,:}=tabellaPeso
+    tabellaTempi{g,:}=tabellaTempo
+
 
 end
 
 
 
 %% non plotta tutto ma è follia farlo cosi tanto.
-[Rows,Cols] = size(tabella)
+[Rows,Cols] = size(tabellaPesi)
 for j = 1:Rows
-    if(~cellfun('isempty',tabella(j,1)))
-        tabx = table(tabella{j,1},tabella{j,2});
+    if(~cellfun('isempty',tabellaPesi(j,1)))
+        tabx = table(tabellaPesi{j,1},tabellaTempi{j,1});
         tab1 = sortrows(tabx,2);
         tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
         %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
@@ -71,12 +79,12 @@ for j = 1:Rows
         scatter(DateCorrectFormat,y,'x');
         ylim([0 100])
         title('Plot Median')
-        xlabel('4h Time Bins') 
+        xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
         legend(Nations{j})
         set(gcf,'color','w');
         fname = sprintf('%s_%s_Median_%s', FileOut{1},FileOut{2},Nations{j});
-        export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
+        export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
     end
     
 end
