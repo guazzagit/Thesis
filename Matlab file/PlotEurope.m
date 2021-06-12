@@ -11,14 +11,6 @@ FileOut2=split(FileOut{1},"/")
 [numRows,numCols] = size(Tc)
 %% carica il file corrispondenza non serve più questo
 
-%for p=1:numRows
- %   for h=1:numRows;
- %       if unique(Tc{p,1})==Corri{h,1}
- %%           Tc{h,5}=Corri{h,2};
-  %      end
- %   end
-%end
-%% cancella fin qui
 Nations={'ES','FR','IT','SE','DE'}
 Nations2=["ES" "FR" "IT" "SE" "DE"]
 Tc(:,5)=Corri(:,2) % forse cosi posso assegnare diretto le corrispondenze...
@@ -77,15 +69,8 @@ for j = 1:Rows
     set(gcf, 'Visible', 'off');
     scatter(DateCorrectFormat,y,'x');
     hold on
-    %%plot(DateCorrectFormat,y);
-
-    %%legend(num2str(h))
     
-    %%ylim([0 100])
-    %scatter(DateCorrectFormat,z,'x');
-    %% set(gca,'xticklabel',{[]})
-    %% set(gca, 'YScale', 'log')
-    
+    end
 end
 ylim([0 100])
 title('Plot Median')
