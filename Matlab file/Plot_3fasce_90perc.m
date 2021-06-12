@@ -46,8 +46,8 @@ for j = 1:Rows
     if(~cellfun('isempty',tabellaPesi(j,1)))
         tabx = table(tabellaPesi{j,1},tabellaTempi{j,1});
         tab1 = sortrows(tabx,2);
-        %%tab2 = groupsummary(tab1,'Var2',hours(2),'median','Var1');
-        tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
+        %%tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
+        tab2 = groupsummary(tab1,'Var2',hours(4),@(x) prctile(x,90));
         x=categorical(tab2.disc_Var2);
         %%y=double(tab2.90Perc_Var1);
         y= double(tab2.fun1_Var1);
