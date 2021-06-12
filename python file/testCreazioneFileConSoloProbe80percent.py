@@ -4,6 +4,7 @@ import csv
 import sys
 import json
 import numpy as np
+from csv import DictReader
 # save data for probes that are 80% active in 2019/2020
 # 20160min sono per 14giorni di bin
 Input_Base = sys.argv[1]
@@ -15,7 +16,6 @@ df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'])
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
 #print(df)
-
 sort=df.sort_values('timestamp')
 TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
@@ -44,13 +44,14 @@ for group in grouped:
 	if perc < 80:
 		probe.append(Id)
 print(probe)
-df1.drop(df1[df1['prb_id'].isin(probe)], inplace=True)
 del df
 del sort2
 del sort
 del group2
 del grouped
-df1.to_csv(Output, index=False)  
-
-
+inded= df1.index[df1['prb_id'].isin(probe)].tolist()
+print(inded)
+df1.drop(labels=inded,axis=0,inplace=True)
+df1.to_csv(Output, index=False) 
+print("end")
 #fa quello ceh dice cioè salva i dati che stanno per 80percent attivi nei vari bin
