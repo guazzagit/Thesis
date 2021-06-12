@@ -7,9 +7,9 @@ Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
 %fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{3});
 
-
+[numRows,numCols] = size(Tc)
 %% carica il file corrispondenza non serve più questo
-%[numRows,numCols] = size(Tc)
+
 %for p=1:numRows
  %   for h=1:numRows;
  %       if unique(Tc{p,1})==Corri{h,1}
