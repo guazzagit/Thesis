@@ -6,7 +6,7 @@ G = findgroups(T{:,1});
 Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
 FileOut2=split(FileOut{1},"/")
-%fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{3});
+%fname = sprintf('%s_%s_90percent_', FileOut{1},FileOut{3});
 
 
 [numRows,numCols] = size(Tc)
@@ -51,7 +51,7 @@ end
 
 
 %% non plotta tutto ma è follia farlo cosi tanto.
-[Rows,Cols] = size(tabella)
+[Rows,Cols] = size(tabellaPesi)
 for j = 1:Rows
     if(~cellfun('isempty',tabellaPesi(j,1)))
         tabx = table(tabellaPesi{j,1},tabellaTempi{j,1});
