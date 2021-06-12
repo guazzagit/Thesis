@@ -23,7 +23,7 @@ Nations={'ES','FR','IT','SE','DE'}
 Nations2=["ES" "FR" "IT" "SE" "DE"]
 Tc(:,5)=Corri(:,2) % forse cosi posso assegnare diretto le corrispondenze...
 
-clear T
+T=[]
 tabellaTempi=cell(5,1)
 tabellaPesi=cell(5,1)
 parfor (g=1:size(Nations,2),2)
