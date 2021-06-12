@@ -79,7 +79,7 @@ for j = 1:Rows
         scatter(DateCorrectFormat,y,'x');
         ylim([0 100])
         title('Plot Median')
-        xlabel('2h Time Bins') 
+        xlabel('4h Time Bins') 
         ylabel('Result(ms)') 
         legend(Nations{j})
         set(gcf,'color','w');

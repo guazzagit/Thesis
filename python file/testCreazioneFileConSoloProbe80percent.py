@@ -17,7 +17,7 @@ df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df)
 
 sort=df.sort_values('timestamp')
-TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
+TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='240min'))["result.rt"].median().size # numero totale di timebins di 2h per dati senza errori
 #TimeBins = sort.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].count().size # per la cosa con errori
 print(TimeBins)
 grouped = sort.groupby(sort.prb_id)
@@ -30,7 +30,7 @@ for group in grouped:
 
 	#sort2["time"]=sort2.timestamp
 	#print(sort2)
-	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["resultset.result.rt"].median().reset_index()  #per  version no error
+	group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='240min'))["result.rt"].median().reset_index()  #per  version no error
 	#group2 = sort2.groupby(pd.Grouper(key='timestamp',freq='360min'))["af"].median().reset_index() # per la versione solo error
 	group2= group2.dropna() #toglie zeri
 
@@ -38,24 +38,18 @@ for group in grouped:
 
 	countPerProbe = group2["timestamp"].size
 	#print(group2)
-	print(countPerProbe)
+	#print(countPerProbe)
 	perc = (np.divide(countPerProbe,TimeBins))*100
-	print(perc)
+	#print(perc)
 	if perc < 80:
 		probe.append(Id)
 print(probe)
-
+df1 = df1[~df1['prb_id'].isin(probe)]
 del df
 del sort2
 del sort
 del group2
 del grouped
-for elem in probe:
-	#df1=df1[df1['prb_id']!=elem]
-	df1.drop(df1[df1['prb_id'] == elem].index, inplace=True)
-	#df1 = df1.drop([df1['prb_id']==elem].index)
-#df1.drop("Unnamed: 0",axis=1, inplace=True)
-
 df1.to_csv(Output, index=False)  
 
 
