@@ -26,7 +26,7 @@ Tc(:,5)=Corri(:,2) % forse cosi posso assegnare diretto le corrispondenze...
 T=[]
 tabellaTempi=cell(5,1)
 tabellaPesi=cell(5,1)
-parfor (g=1:size(Nations,2),2)
+parfor (g=1:size(Nations,2),3)
     singlerow=cell(1,2)
     tabellaTempo=[]
     tabellaPeso=[]
@@ -47,8 +47,8 @@ parfor (g=1:size(Nations,2),2)
 
 
 end
-
-
+tabellaTempo=[]
+tabellaPeso=[]
 
 %% non plotta tutto ma è follia farlo cosi tanto.
 [Rows,Cols] = size(tabellaPesi)
