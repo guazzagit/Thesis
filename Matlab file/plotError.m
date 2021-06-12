@@ -11,14 +11,6 @@ FileOut2=split(FileOut{1},"/")
 [numRows,numCols] = size(Tc)
 %% carica il file corrispondenza non serve più questo
 
-%for p=1:numRows
- %   for h=1:numRows;
- %       if unique(Tc{p,1})==Corri{h,1}
- %%           Tc{h,5}=Corri{h,2};
-  %      end
- %   end
-%end
-%% cancella fin qui
 Nations={'ES','FR','IT','SE','DE'}
 Nations2=["ES" "FR" "IT" "SE" "DE"]
 Tc(:,5)=Corri(:,2) % forse cosi posso assegnare diretto le corrispondenze...
@@ -63,7 +55,7 @@ for j = 1:Rows
         Var_Count = groupsummary(tab1,'Var2',hours(4),'sum','Var1'); %% raggruppa e calcola il metodo/funzione che gli si passa.
 
         time = Var_Count.disc_Var2;
-        count = Var_Count.max_Var1;
+        count = Var_Count.sum_Var1;
     %% ---------- prova miglioramento grafico.
 
         stringa = string(time)
@@ -85,9 +77,9 @@ for j = 1:Rows
         datenumb=datenumb.'
         difference= diff([0 datenumb]) % differenza tra elementi
         difference=difference*24*60 % lo porto in formato migliore
-        difference2=difference/2 % cosi divido per 6 ore cosi num come 1 ecc ho 
+        difference2=difference/2 % cosi divido per X ore cosi num come 1 ecc ho 
         vuoto=find(difference2 > 240) % trovo le differenze cioè le posizioni
-
+            %% 240 sono minuti cioè 4 ore
         NewDate= DateCorrectFormat.'
         valori= difference2(difference2>240)
         dimensione=size(vuoto,2)
@@ -104,7 +96,6 @@ for j = 1:Rows
         NewDate=NewDate.'
         NewCount=NewCount.'
         set(gcf, 'Visible', 'off');
-        figure('Visible', 'off')
 
         plot(NewDate,NewCount)
         hold on
