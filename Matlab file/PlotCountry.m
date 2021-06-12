@@ -44,11 +44,11 @@ parfor (g=1:size(Nations,2),3)
     end
     tabellaPesi{g,:}=tabellaPeso
     tabellaTempi{g,:}=tabellaTempo
-
+    tabellaTempo=[]
+    tabellaPeso=[]
 
 end
-tabellaTempo=[]
-tabellaPeso=[]
+
 
 %% non plotta tutto ma è follia farlo cosi tanto.
 [Rows,Cols] = size(tabellaPesi)
