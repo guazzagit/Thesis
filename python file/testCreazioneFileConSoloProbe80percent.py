@@ -44,7 +44,7 @@ for group in grouped:
 	if perc < 80:
 		probe.append(Id)
 print(probe)
-df1 = df1[~df1['prb_id'].isin(probe)]
+df1.drop(df1['prb_id'].isin(probe), inplace=True)
 del df
 del sort2
 del sort
