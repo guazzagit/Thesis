@@ -1,71 +1,66 @@
 function[]= plotError(param1, param2)
 T = readtable(param1); %% inserire qua il csv da plottare.
-G = findgroups(T{:,8});     
 Country = readtable('ContryProbe.csv');
-Tc = splitapply( @(varargin) varargin, T, G);
 load(param2) %% caricamento file di corrispondenza paesi probe
+G = findgroups(T{:,1});     
+Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
-fname = sprintf('%s_%s_Error_All', FileOut{1},FileOut{2});
+FileOut2=split(FileOut{1},"/")
+%fname = sprintf('%s_%s_Error_All_', FileOut{1},FileOut{3});
 
-[numRows,numCols] = size(Tc);
-arrayTempo=[]
-arrayConto=[]
-for p=1:numRows
-    for h=1:numRows;
-        if unique(Tc{p,19})==Corri{h,1}
-            Tc{h,28}=Corri{h,2};
-        end
-    end
-end
+[numRows,numCols] = size(Tc)
+%% carica il file corrispondenza non serve più questo
+
+%for p=1:numRows
+ %   for h=1:numRows;
+ %       if unique(Tc{p,1})==Corri{h,1}
+ %%           Tc{h,5}=Corri{h,2};
+  %      end
+ %   end
+%end
+%% cancella fin qui
 Nations={'ES','FR','IT','SE','DE'}
+Nations2=["ES" "FR" "IT" "SE" "DE"]
+Tc(:,5)=Corri(:,2) % forse cosi posso assegnare diretto le corrispondenze...
 
-Peso=[]
-Tempo=[]
-appoggio=[]
-tabella=cell(5,2)
-tatto=cell(5,1)
-scount=0;
 
-for g=1:size(Nations,2)
+T=[]
+tabellaTempi=cell(5,1)
+tabellaPesi=cell(5,1)
+parfor (g=1:size(Nations,2),3)
+    singlerow=cell(1,2)
+    tabellaTempo=[]
+    tabellaPeso=[]
     for b=1:numRows
-        if Tc{b,5} == Nations{1,g}
-            appoggio=cell2table(Tc(b,2))
-            Peso=vertcat(Peso,cell2mat(Tc(b,3)))
-            %Peso=vertcat(Peso,cell2mat(Tc{b,25})) %% fittizzio
-            % problema qui perchè vedecell array e poi alcune non sono
-            if iscell(appoggio.Var1)
-                Tempo=cat(1,Tempo,appoggio.Var1{1,1})
-                appoggio=[]                
-            else
-                Tempo=cat(1,Tempo,appoggio.Var1)
-                appoggio=[] 
-            end
+        
+        if cell2mat(Tc(b,5)) == Nations{g}
+
+            singlerow{1,1}=cell2mat(Tc(b,3))
+            singlerow{1,2}=Tc{b,2}
+            %appoggio=[]
+            tabellaPeso=[tabellaPeso;singlerow{1}]
+            tabellaTempo=[tabellaTempo;singlerow{2}]
         end
+
     end
-    prop=cell(size(Tempo,1),size(Tempo,2))
-    tabella{g,1}=Peso
-    Peso=[];
-    tabella{g,2}=Tempo
-    Tempo=[]
+    tabellaPesi{g,:}=tabellaPeso
+    tabellaTempi{g,:}=tabellaTempo
+
 
 end
-
-
-
-
 
 
 [Rows,Cols] = size(tabella)
 for j = 1:Rows
-    if(~cellfun('isempty',tabella(j,1)))
-        tabx = table(tabella{j,1},tabella{j,2});
+    if(~cellfun('isempty',tabellaPesi(j,1)))
+        tabx = table(tabellaPesi{j,1},tabellaTempi{j,1});
         tab1 = sortrows(tabx,2);
         array=table2array(tab1(:,1))
         idx=find(isnan(array))
         idx2=find(array>0)
         tab1.Var1(idx)=1
         tab1.Var1(idx2)=0
-        Var_Count = groupsummary(tab1,'Var2',hours(2),'sum','Var1'); %% raggruppa e calcola il metodo/funzione che gli si passa.
+        Var_Count = groupsummary(tab1,'Var2',hours(4),'sum','Var1'); %% raggruppa e calcola il metodo/funzione che gli si passa.
 
         time = Var_Count.disc_Var2;
         count = Var_Count.max_Var1;
@@ -86,22 +81,15 @@ for j = 1:Rows
 
         end
 
-        %% ---------------------------------------------
-        %% per riempire i missing value
-
-
-        %%grammo=zeros(size(DateCorrectFormat,1),1)
-        %% cambia in scatter che si vede meglio e metti i bin più grossi.
-        %% puoi fa pure i plot classici.
         datenumb= datenum(DateCorrectFormat) % converto dat e in numeri
         datenumb=datenumb.'
         difference= diff([0 datenumb]) % differenza tra elementi
         difference=difference*24*60 % lo porto in formato migliore
         difference2=difference/2 % cosi divido per 6 ore cosi num come 1 ecc ho 
-        vuoto=find(difference2 > 360) % trovo le differenze cioè le posizioni
+        vuoto=find(difference2 > 240) % trovo le differenze cioè le posizioni
 
         NewDate= DateCorrectFormat.'
-        valori= difference2(difference2>360)
+        valori= difference2(difference2>240)
         dimensione=size(vuoto,2)
         NewCount=count.'
         v=2
@@ -115,7 +103,8 @@ for j = 1:Rows
         end
         NewDate=NewDate.'
         NewCount=NewCount.'
-
+        set(gcf, 'Visible', 'off');
+        figure('Visible', 'off')
 
         plot(NewDate,NewCount)
         hold on
@@ -123,10 +112,10 @@ for j = 1:Rows
 end
 ylim([0 50])
 title('Plot Error')
-xlabel('2hrs Time Bins') 
+xlabel('4hrs Time Bins') 
 ylabel('Count') 
 legend('ES','FR','IT','SE','DE')
 set(gcf,'color','w');
-export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
 
 end
