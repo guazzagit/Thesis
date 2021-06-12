@@ -44,8 +44,6 @@ parfor (g=1:size(Nations,2),3)
     end
     tabellaPesi{g,:}=tabellaPeso
     tabellaTempi{g,:}=tabellaTempo
-    tabellaTempo=[]
-    tabellaPeso=[]
 
 end
 
