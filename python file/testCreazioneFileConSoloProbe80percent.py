@@ -11,7 +11,7 @@ Input_Base = sys.argv[1]
 Input_twoYears = sys.argv[2]
 Output = sys.argv[3]
 
-df1=pd.read_csv(Input_Base,parse_dates=['timestamp'])
+#df1=pd.read_csv(Input_Base,parse_dates=['timestamp'])
 df= pd.read_csv(Input_twoYears,parse_dates=['timestamp'])
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 #print(df['timestamp'])
@@ -49,9 +49,22 @@ del sort2
 del sort
 del group2
 del grouped
-inded= df1.index[df1['prb_id'].isin(probe)].tolist()
+#inded= df1.index[df1['prb_id'].isin(probe)].tolist()
 #print(inded)
-df1.drop(labels=inded,axis=0,inplace=True)
-df1.to_csv(Output, index=False) 
+#df1.drop(labels=inded,axis=0,inplace=True)
+#df1.to_csv(Output, index=False) 
+
+fieldnames = ['prb_id','timestamp','resultset.result.rt']
+
+with open(Input_Base, 'r') as Input, open(Output,'a',newline='') as out:
+	new = csv.writer(out)
+	new.writerow(fieldnames)
+	csv_reader = DictReader(Input)
+	for row in csv_reader:
+		if row["prb_id"] not in probe:
+			new.writerow([row["prb_id"],row["timestamp"],row["result.rt"]])
+
+
+
 print("end")
 #fa quello ceh dice cioè salva i dati che stanno per 80percent attivi nei vari bin
