@@ -50,7 +50,7 @@ del sort
 del group2
 del grouped
 inded= df1.index[df1['prb_id'].isin(probe)].tolist()
-print(inded)
+#print(inded)
 df1.drop(labels=inded,axis=0,inplace=True)
 df1.to_csv(Output, index=False) 
 print("end")
