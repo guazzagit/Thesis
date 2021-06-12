@@ -46,30 +46,30 @@ end
 for j = 1:Rows
     if(~cellfun('isempty',tabellaPesi(j,1)))
         tabx = table(tabellaPesi{j,1},tabellaTempi{j,1});
-    tab1 = sortrows(tabx,2);
-    tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
-    %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
-    x=categorical(tab2.disc_Var2);
-    y=double(tab2.median_Var1);
-    %%y= double(tab2.fun1_Var1);
-    N = length(y);
-    limit = 100;
-    for i = 1:N
-        if(y(i)>limit)
-            y(i)=limit;
+        tab1 = sortrows(tabx,2);
+        tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
+        %%tab2 = groupsummary(tab1,'Var2',hours(2),@(x) prctile(x,90));
+        x=categorical(tab2.disc_Var2);
+        y=double(tab2.median_Var1);
+        %%y= double(tab2.fun1_Var1);
+        N = length(y);
+        limit = 100;
+        for i = 1:N
+            if(y(i)>limit)
+                y(i)=limit;
+            end
         end
-    end
-    
-    stringa = string(x)
-    stringa2 = split(stringa,',',2)
-    iwant = stringa2(:,2)
-    val = strrep(iwant,']','')
-    val2 = strrep(val,')','')
-    DateCorrectFormat = datetime(val2)
-    set(gcf, 'Visible', 'off');
-    scatter(DateCorrectFormat,y,'x');
-    hold on
-    
+        
+        stringa = string(x)
+        stringa2 = split(stringa,',',2)
+        iwant = stringa2(:,2)
+        val = strrep(iwant,']','')
+        val2 = strrep(val,')','')
+        DateCorrectFormat = datetime(val2)
+        set(gcf, 'Visible', 'off');
+        scatter(DateCorrectFormat,y,'x');
+        hold on
+        
     end
 end
 ylim([0 100])
