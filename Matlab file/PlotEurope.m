@@ -72,7 +72,7 @@ for j = 1:Rows
         
     end
 end
-ylim([0 100])
+ylim([0 200])
 title('Plot Median')
 xlabel('4h Time Bins') 
 ylabel('Result(ms)') 
