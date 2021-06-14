@@ -52,7 +52,7 @@ for j = 1:Rows
         %%y=double(tab2.90Perc_Var1);
         y= double(tab2.fun1_Var1);
         N = length(y);
-        limit = 100;
+        limit = 200;
         for i = 1:N
             if(y(i)>limit)
                 y(i)=limit;
@@ -76,7 +76,7 @@ for j = 1:Rows
         set(gcf, 'Visible', 'off');
         figure('Visible', 'off')
         scatter(tabmattina.DateCorrectFormat,tabmattina.y,'x');
-        ylim([0 100])
+        ylim([0 200])
         title('Plot 90Perc morning')
         xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
@@ -87,7 +87,7 @@ for j = 1:Rows
         set(gcf, 'Visible', 'off');
         figure('Visible', 'off')
         scatter(tabpomeriggio.DateCorrectFormat,tabpomeriggio.y,'x');
-        ylim([0 100])
+        ylim([0 200])
         title('Plot 90Perc afternoon')
         xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
@@ -98,7 +98,7 @@ for j = 1:Rows
         set(gcf, 'Visible', 'off');
         figure('Visible', 'off')
         scatter(tabsera.DateCorrectFormat,tabsera.y,'x');
-        ylim([0 100])
+        ylim([0 200])
         title('Plot 90Perc night')
         xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
