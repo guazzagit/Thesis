@@ -67,9 +67,9 @@ for j = 1:Rows
         DateCorrectFormat = datetime(val2)
         tabletest=[]
         tabletest=table(DateCorrectFormat,y)
-        sera= find((hour(DateCorrectFormat)<=4 | (20<hour(DateCorrectFormat) & hour(DateCorrectFormat)<=23)))
-        pomeriggio=find( 12<hour(DateCorrectFormat) & hour(DateCorrectFormat)<=20)
-        mattina=find(4<hour(DateCorrectFormat) & hour(DateCorrectFormat)<=12)
+        sera= find((hour(DateCorrectFormat)>0 & hour(DateCorrectFormat)<=8)) %notte
+        pomeriggio=find( 16<hour(DateCorrectFormat) & hour(DateCorrectFormat)<=23 | (hour(DateCorrectFormat)==0)) % lavoor/svago
+        mattina=find(8<hour(DateCorrectFormat) & hour(DateCorrectFormat)<=16) %lavoro
         tabmattina=tabletest(mattina,:)
         tabpomeriggio=tabletest(pomeriggio,:)
         tabsera=tabletest(sera,:)
@@ -77,7 +77,7 @@ for j = 1:Rows
         figure('Visible', 'off')
         scatter(tabmattina.DateCorrectFormat,tabmattina.y,'x');
         ylim([0 200])
-        title('Plot Median morning')
+        title('Plot Median from 8:00 to 16:00')
         xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
         legend(Nations{j})
@@ -88,7 +88,7 @@ for j = 1:Rows
         figure('Visible', 'off')
         scatter(tabpomeriggio.DateCorrectFormat,tabpomeriggio.y,'x');
         ylim([0 200])
-        title('Plot Median afternoon')
+        title('Plot Median from 16:00 to 00:00')
         xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
         legend(Nations{j})
@@ -99,7 +99,7 @@ for j = 1:Rows
         figure('Visible', 'off')
         scatter(tabsera.DateCorrectFormat,tabsera.y,'x');
         ylim([0 200])
-        title('Plot Median night')
+        title('Plot Median from 00:00 to 8:00')
         xlabel('2h Time Bins') 
         ylabel('Result(ms)') 
         legend(Nations{j})
