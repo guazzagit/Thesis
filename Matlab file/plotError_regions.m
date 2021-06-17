@@ -101,7 +101,7 @@ for j = 1:Rows
         title('Plot Error')
         xlabel('4hrs Time Bins') 
         ylabel('Count') 
-        legend('ES','FR','IT','SE','DE')
+        legend(Nations{j})
         set(gcf,'color','w');
         fname = sprintf('%s_%s_Error_%s', FileOut2{end},FileOut{2},Nations{j});
         export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
