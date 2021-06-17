@@ -7,7 +7,6 @@ Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
 FileOut2=split(FileOut{1},"/")
 %fname = sprintf('%s_%s_Error_All_', FileOut{1},FileOut{3});
-fname = sprintf('%s_%s_Error_All', FileOut2{end},FileOut{2});
 [numRows,numCols] = size(Tc)
 %% carica il file corrispondenza non serve più questo
 
@@ -96,17 +95,18 @@ for j = 1:Rows
         NewDate=NewDate.'
         NewCount=NewCount.'
         set(gcf, 'Visible', 'off');
-
+        figure('Visible', 'off')
         plot(NewDate,NewCount)
-        hold on
+        ylim([0 50])
+        title('Plot Error')
+        xlabel('4hrs Time Bins') 
+        ylabel('Count') 
+        legend('ES','FR','IT','SE','DE')
+        set(gcf,'color','w');
+        fname = sprintf('%s_%s_Error_%s', FileOut2{end},FileOut{2},Nations{j});
+        export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
      end
 end
-ylim([0 50])
-title('Plot Error')
-xlabel('4hrs Time Bins') 
-ylabel('Count') 
-legend('ES','FR','IT','SE','DE')
-set(gcf,'color','w');
-export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
+
 
 end
