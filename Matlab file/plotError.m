@@ -7,7 +7,7 @@ Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
 FileOut2=split(FileOut{1},"/")
 %fname = sprintf('%s_%s_Error_All_', FileOut{1},FileOut{3});
-
+fname = sprintf('%s_%s_Error_All_%s', FileOut2{end},FileOut{2});
 [numRows,numCols] = size(Tc)
 %% carica il file corrispondenza non serve più questo
 
