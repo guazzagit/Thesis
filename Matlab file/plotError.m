@@ -42,7 +42,7 @@ parfor (g=1:size(Nations,2),3)
 end
 
 
-[Rows,Cols] = size(tabella)
+[Rows,Cols] = size(tabellaPesi)
 for j = 1:Rows
     if(~cellfun('isempty',tabellaPesi(j,1)))
         tabx = table(tabellaPesi{j,1},tabellaTempi{j,1});
