@@ -22,6 +22,6 @@ result=pd.merge(df1,df,how="left", on=["prb_id"])
 
 #print(inded)
 result.drop("Unnamed: 0",axis=1, inplace=True)
-print(result)
+#print(result)
 result.to_csv(Output, index=False) 
 print("DONE")
