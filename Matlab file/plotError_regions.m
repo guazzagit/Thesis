@@ -97,7 +97,7 @@ for j = 1:Rows
         set(gcf, 'Visible', 'off');
         figure('Visible', 'off')
         plot(NewDate,NewCount)
-        ylim([0 50])
+        ylim([0 100])
         title('Plot Error')
         xlabel('4hrs Time Bins') 
         ylabel('Count') 

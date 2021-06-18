@@ -101,7 +101,7 @@ for j = 1:Rows
         hold on
      end
 end
-ylim([0 50])
+ylim([0 100])
 title('Plot Error')
 xlabel('4hrs Time Bins') 
 ylabel('Count') 
