@@ -13,7 +13,7 @@ Output= sys.argv[3]
 
 #fieldnames = ['from','fw','group_id','lts','msm_id','msm_name','prb_id','stored_timestamp','timestamp','type','resultset','resultset.af','resultset.dst_addr','resultset.dst_port','resultset.lts','resultset.proto','resultset.result.ANCOUNT','resultset.result.ARCOUNT','resultset.result.ID','resultset.result.NSCOUNT','resultset.result.QDCOUNT','resultset.result.abuf','resultset.result.rt','resultset.result.size','resultset.src_addr','resultset.subid','resultset.submax','resultset.time','mver']
 fieldnames = ['prb_id','timestamp','resultset.result.rt','asn']
-with open(Input,'r') as f, open(Output,'a',newline='') as out:
+with open(Input,'r',newline='') as f, open(Output,'a',newline='') as out:
 	df=pd.read_csv(Input2)
 	reader1 = DictReader(f)
 	new = csv.writer(out)
