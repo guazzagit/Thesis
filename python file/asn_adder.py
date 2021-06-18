@@ -25,6 +25,6 @@ with open(Input,'r') as f, open(Output,'a',newline='') as out:
 			mask=df[df['prb_id']==int(line1['prb_id'])].index.values[0]		
 			#print(mask)
 			#print(df.iloc[mask]['prb_id'])
-			new.writerow([line1['prb_id'],line1['timestamp'],line1['resultset.result.rt'],df.iloc[mask]['asn_v4']astype('int64')])
+			new.writerow([line1['prb_id'],line1['timestamp'],line1['resultset.result.rt'],df.iloc[mask]['asn_v4']])
 
 print("DONE")
