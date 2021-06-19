@@ -64,9 +64,9 @@ for j = 1:size(Nations,2)%dim nazioni poi
             %tab22=tab22(1:minimo,:)
             diff=size(tab22(:,2),1)-size(tab2(:,2),1)
             aggiunto=NaN(1,diff).';
-            y=double(tab2.median_Var1);
+            y=double(tab2.fun1_Var1);
             y=[y;aggiunto]
-            y2=double(tab22.median_Var1);
+            y2=double(tab22.fun1_Var1);
             plottare=[plottare,y,y2]
             name=sprintf('2019(%d)',Tc3{b,5})
             cella={name}
@@ -81,7 +81,7 @@ for j = 1:size(Nations,2)%dim nazioni poi
         figure('Visible', 'off')
         boxplot([plottare],'Labels',label,'Whisker',1)
         ylim([0 200])
-        topName = sprintf('BoxPlotMedian %s',Nations{j});
+        topName = sprintf('BoxPlot 90Percentile %s',Nations{j});
         title(topName)
         xlabel('Year/(ASN)') 
         ylabel('Result') 
