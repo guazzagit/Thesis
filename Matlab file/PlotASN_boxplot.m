@@ -5,7 +5,8 @@ T = readtable(param1); %% inserire qua il csv da plottare.
 FileOut= split(param1,"_")
 FileOut2=split(FileOut{1},"/")
 %fname = sprintf('%s_%s_Median_', FileOut{1},FileOut{3});
-
+Nations2=["ES" "FR" "IT" "SE" "DE"]
+Nations={'ES','FR','IT','SE','DE'}
 IndiciRegion=find(ismember(T{:,4},Nations))%trovo indici per dove sono le regfioni che voglio
 T=T(IndiciRegion,:)
 G = findgroups(T{:,5});     
@@ -16,8 +17,7 @@ conv=cell2mat(cellsz1)
 idxd=find(conv>10) %trovo le posizioni dei magg di 10
 %Tc(:,6)=cellsz1(:,1)
 Tc2=Tc(idxd,:) % isolo solo quelli con più di 1o probe
-Nations2=["ES" "FR" "IT" "SE" "DE"]
-Nations={'ES','FR','IT','SE','DE'}
+
 [numRows2,numCols2] = size(Tc2)
 regions=cellfun(@unique,Tc2(:,4),'UniformOutput',false)
 %find(ismember(cell2mat(regions{9,1}), Nations))
@@ -60,9 +60,12 @@ for j = 1:size(Nations,2)%dim nazioni poi
             tab11 = sortrows(tabxx,2);
             tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
             tab22 = groupsummary(tab11,'Var2',hours(4),'median','Var1');
-            minimo=min(size(tab2(:,2),1),size(tab22(:,2),1))
-            tab22=tab22(1:minimo,:)
+            %minimo=min(size(tab2(:,2),1),size(tab22(:,2),1))
+            %tab22=tab22(1:minimo,:)
+            diff=size(tab22(:,2),1)-size(tab2(:,2),1)
+            aggiunto=NaN(1,diff).';
             y=double(tab2.median_Var1);
+            y=[y;aggiunto]
             y2=double(tab22.median_Var1);
             plottare=[plottare,y,y2]
             name=sprintf('2019(%s)',Tc3{b,5})
