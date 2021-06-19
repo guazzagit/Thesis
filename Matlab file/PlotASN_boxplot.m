@@ -87,7 +87,7 @@ for j = 1:size(Nations,2)%dim nazioni poi
         ylabel('Result') 
         
         set(gcf,'color','w');
-        fname = sprintf('%s_%s_boxplot_%s', FileOut2,FileOut{2},Nations{j});
+        fname = sprintf('%s_%s_boxplot_%s', FileOut2{end},FileOut{2},Nations{j});
         export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
    
     
