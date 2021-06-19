@@ -58,8 +58,8 @@ for j = 1:size(Nations,2)%dim nazioni poi
             tabxx = table(Tc4{b,3},Tc4{b,2});
             tab1 = sortrows(tabx,2);
             tab11 = sortrows(tabxx,2);
-            tab2 = groupsummary(tab1,'Var2',hours(4),@(x) prctile(x,90));
-            tab22 = groupsummary(tab11,'Var2',hours(4),@(x) prctile(x,90));
+            tab2 = groupsummary(tab1,'Var2',hours(4),@(Var1) prctile(Var1,90));
+            tab22 = groupsummary(tab11,'Var2',hours(4),@(Var1) prctile(Var1,90));
             %minimo=min(size(tab22(:,2),1),size(tab2(:,2),1))
             %tab22=tab22(1:minimo,:)
             diff=size(tab22(:,2),1)-size(tab2(:,2),1)
@@ -80,7 +80,7 @@ for j = 1:size(Nations,2)%dim nazioni poi
         set(gcf, 'Visible', 'off');
         figure('Visible', 'off')
         boxplot([plottare],'Labels',label,'Whisker',1)
-        ylim([0 200])
+        ylim([0 500])
         topName = sprintf('BoxPlot 90Percentile %s',Nations{j});
         title(topName)
         xlabel('Year/(ASN)') 
