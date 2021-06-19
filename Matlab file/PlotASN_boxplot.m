@@ -60,7 +60,7 @@ for j = 1:size(Nations,2)%dim nazioni poi
             tab11 = sortrows(tabxx,2);
             tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
             tab22 = groupsummary(tab11,'Var2',hours(4),'median','Var1');
-            %minimo=min(size(tab2(:,2),1),size(tab22(:,2),1))
+            %minimo=min(size(tab22(:,2),1),size(tab2(:,2),1))
             %tab22=tab22(1:minimo,:)
             diff=size(tab22(:,2),1)-size(tab2(:,2),1)
             aggiunto=NaN(1,diff).';
@@ -68,11 +68,11 @@ for j = 1:size(Nations,2)%dim nazioni poi
             y=[y;aggiunto]
             y2=double(tab22.median_Var1);
             plottare=[plottare,y,y2]
-            name=sprintf('2019(%s)',Tc3{b,5})
+            name=sprintf('2019(%d)',Tc3{b,5})
             cella={name}
-            name2=sprintf('2020(%s)',Tc4{b,5})
+            name2=sprintf('2020(%d)',Tc4{b,5})
             %cella=['2019',Tc3{b,5}];%Tc3{b,5}
-            cella2={name2}%sprintf('2020(%s)',Tc4{b,5});%Tc4{b,5}
+            cella2={name2}
             label=[label, cella,cella2]
         end
         
