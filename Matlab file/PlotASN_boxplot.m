@@ -76,19 +76,19 @@ for j = 1:size(Nations,2)%dim nazioni poi
             tabxx = table(Tc4{b,3},Tc4{b,2});
             tab1 = sortrows(tabx,2);
             tab11 = sortrows(tabxx,2);
-            tab2 = groupsummary(tab1,'Var2',hours(4),@(Var1) prctile(Var1,90));
-            %tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
-            tab22 = groupsummary(tab11,'Var2',hours(4),@(Var1) prctile(Var1,90));
-            %tab22 = groupsummary(tab11,'Var2',hours(4),'median','Var1');
+            %tab2 = groupsummary(tab1,'Var2',hours(4),@(Var1) prctile(Var1,90));
+            tab2 = groupsummary(tab1,'Var2',hours(4),'median','Var1');
+            %tab22 = groupsummary(tab11,'Var2',hours(4),@(Var1) prctile(Var1,90));
+            tab22 = groupsummary(tab11,'Var2',hours(4),'median','Var1');
             %minimo=min(size(tab22(:,2),1),size(tab2(:,2),1))
             diff=size(tab22(:,2),1)-size(tab2(:,2),1)
             aggiunto=NaN(1,diff).';
             %tab22=tab22(1:minimo,:)
-            y=double(tab2.fun1_Var1);;
-            %y=double(tab2.median_Var1);;
+            %y=double(tab2.fun1_Var1);;
+            y=double(tab2.median_Var1);;
             y=[y;aggiunto]
-            y2=double(tab22.fun1_Var1);
-            %y2=double(tab22.median_Var1);
+            %y2=double(tab22.fun1_Var1);
+            y2=double(tab22.median_Var1);
             plottare=[plottare,y,y2]
             
 
@@ -139,7 +139,7 @@ for j = 1:size(Nations,2)%dim nazioni poi
             patch(get(a(g),'XData'),get(a(g),'YData'),colorsForPlotting{g},'FaceAlpha',.15);
         end
         ylim([0 500])
-        topName = sprintf('BoxPlot 90 Percentile %s',Nations{j});
+        topName = sprintf('BoxPlot Median %s',Nations{j});
         title(topName)
         xlabel('ASN') 
         ylabel('Result')
@@ -152,8 +152,8 @@ for j = 1:size(Nations,2)%dim nazioni poi
         legend(h, 'Empty','Resident','Non-Resident');
                
         set(gcf,'color','w');
-        fname = sprintf('%s_%s_boxplot90perc_%s', FileOut2,FileOut{2},Nations{j});
-        export_fig(['C:/Users/guazz/Desktop/' fname], '-pdf');
+        fname = sprintf('%s_%s_boxplot_%s', FileOut2,FileOut{2},Nations{j});
+        export_fig(['/home/guazzelli/disco/Thesis/Matlab file/plot/' fname], '-pdf');
    
     
 end
