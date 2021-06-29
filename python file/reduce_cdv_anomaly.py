@@ -18,10 +18,4 @@ with open(Input, "r",encoding="utf8") as source:
 
 			# Use CSV Index to remove a column from CSV
 			#r[3] = r['year']
-			if "ASN" in r[1]:
-				writer.writerow((r[1], r[4],r[3]))
-			else:
-				string=str(r[1])
-				string2=string.replace('AS','')
-				#print(string2)
-				writer.writerow((string2, r[4],r[3]))
+			writer.writerow((r[1],r[2]))
