@@ -1,4 +1,4 @@
-function[] = PlotCountry(param1,param2)
+function[] = TTtestSIgn(param1,param2)
 T = readtable(param1); %% inserire qua il csv da plottare.
 %load(param2) %% caricamento file di corrispondenza paesi probe
 
@@ -60,6 +60,14 @@ for b=1:numRows2
     PostASn=find(Tc22{b,5}==tabellaNumeriUser{:,1})
     Tc22{b,6}=tabellaNumeriUser{PostASn,3}
 end
+%solo i primi 6 mesi del 2020
+for v=1:size(Tc22,1)
+    primi6=find(Tc22{v,2}<='2020-06-30 23:55:55')
+    Tc22{v,2}=Tc22{v,2}(primi6,1)
+    Tc22{v,1}=Tc22{v,1}(primi6,1)
+    Tc22{v,3}=Tc22{v,3}(primi6,1)
+end
+
 
 
 T=[]
@@ -67,7 +75,8 @@ Type=[]
 ttest_result=[]
 Asn_Number=[]
 Nation=[]
-
+Tabellastampare=[]
+Pvalues=[]
 [Rows,Cols] = size(Tc2)
 for j = 1:size(Nations,2)%dim nazioni poi
         idf=find(ismember(Tc2(:,4), Nations(j))) %trovo gli indici della nazione j
@@ -106,7 +115,8 @@ for j = 1:size(Nations,2)%dim nazioni poi
                 Type=[Type;"Residential"]
             else % non residenziale
                 Type=[Type;"Not Residential"]
-            end            
+            end   
+            Pvalues=[Pvalues;p]
         end
 
     
@@ -115,14 +125,20 @@ Type=array2table(Type)
 ttest_result=array2table(ttest_result)
 Asn_Number=array2table(Asn_Number)
 Nation=array2table(Nation)
-Tabellastampare=[Asn_Number,Type,Nation,ttest_result]
+Pvalues=array2table(Pvalues)
+Tabellastampare=[Asn_Number,Type,Nation,ttest_result,Pvalues]
+
 resident_entry=Tabellastampare(find(Tabellastampare{:,2}=="Residential"),:)
 nonResident_entry=Tabellastampare(find(Tabellastampare{:,2}=="Not Residential"),:)
-
-[p_residential,h_residential,stats_residential] = signtest(resident_entry{:,4})
-[p_Notresidential,h_Notresidential,stats_Notresidential] = signtest(nonResident_entry{:,4})
+resident_entry=resident_entry(find(resident_entry{:,4}~= '='),:)
+nonResident_entry=nonResident_entry(find(nonResident_entry{:,4}~= '='),:)
 
 %% il sign test applicazione al risultato  ottenuto dal ttest.
+
+[p_residential,h_residential,stats_residential] = signtest(resident_entry{:,5})
+[p_Notresidential,h_Notresidential,stats_Notresidential] = signtest(nonResident_entry{:,5})
+
+
 %Tabellastampare{:,4}
 
 
