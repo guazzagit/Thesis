@@ -14,8 +14,10 @@ with open(Input, "r",encoding="utf8") as source:
 	
 	with open(Output, "a",newline='',encoding="utf8") as result:
 		writer = csv.writer(result)
+		writer.writerow('timestamp,resultset.result.rt,nation')
 		for r in reader:
-
-			# Use CSV Index to remove a column from CSV
-			#r[3] = r['year']
-			writer.writerow((r[1],r[2]))
+			#if(r[4]=="3269.0" and r[3]=='IT'):
+				
+				# Use CSV Index to remove a column from CSV
+				#r[3] = r['year']
+				writer.writerow((r[1],r[2],r[3]))

@@ -17,5 +17,5 @@ table_html = table.get_attribute('innerHTML')
 
 df = read_html(table_html)[0]
 print (df)
-df.to_csv('asn_number_user.csv',index=False)
-driver.close()
+df.to_csv('asn_number_user11.csv',index=False)
+#driver.close()
