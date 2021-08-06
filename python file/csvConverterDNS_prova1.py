@@ -20,7 +20,16 @@ with open(Input,'r') as f, open(Output, 'a',newline='') as out:
             y=float("NaN")
         else:
             y=x["resultset"]["result"]["rt"]
+        
+        if "dst_addr" not in x["resultset"]:
+            y=float("NaN")
+        else:
+            y=x["resultset"]["dst_addr"]
+        if "dst_addr" not in x["resultset"]:
+            z=float("NaN")
+        else:
+            z=x["resultset"]["dst_addr"]
 
-        new.writerow([x["prb_id"],x["timestamp"],y,x["resultset"]["dst_addr"],x["resultset"]["subid"]])
+        new.writerow([x["prb_id"],x["timestamp"],y,z,x["resultset"]["subid"]])
 
 print("CSV DONE")
