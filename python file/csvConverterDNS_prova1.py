@@ -21,6 +21,6 @@ with open(Input,'r') as f, open(Output, 'a',newline='') as out:
         else:
             y=x["resultset"]["result"]["rt"]
 
-        new.writerow([x["prb_id"],x["timestamp"],y,x["resultset"]["subid"],x["resultset"]["dst_addr"]])
+        new.writerow([x["prb_id"],x["timestamp"],y,x["resultset"]["dst_addr"],x["resultset"]["subid"]])
 
 print("CSV DONE")
