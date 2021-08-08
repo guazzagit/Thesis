@@ -20,11 +20,7 @@ with open(Input,'r') as f, open(Output, 'a',newline='') as out:
             y=float("NaN")
         else:
             y=x["resultset"]["result"]["rt"]
-        
-        if "dst_addr" not in x["resultset"]:
-            y=float("NaN")
-        else:
-            y=x["resultset"]["dst_addr"]
+ 
         if "dst_addr" not in x["resultset"]:
             z=float("NaN")
         else:
