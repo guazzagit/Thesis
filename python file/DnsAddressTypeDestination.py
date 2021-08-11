@@ -34,7 +34,7 @@ with open(Input,"r",encoding="utf8") as f:
 				writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],r[6],'Private'))
 			else:
 				obj = IPWhois(r[3])
-				res=obj.lookup_rdap(asn_methods=['dns', 'whois', 'http'])
+				res=obj.lookup_whois(ignore_referral_errors=True)
 				as_unkn= res['asn']
 				writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],as_unkn,'UnknownPublic'))
 				
