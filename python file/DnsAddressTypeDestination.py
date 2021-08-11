@@ -35,7 +35,6 @@ with open(Input,"r",encoding="utf8") as f:
 			else:
 				obj = IPWhois(r[3])
 				res=obj.lookup_rdap()
-				print(res)
 				as_unkn= res['asn']
 				writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],as_unkn,'UnknownPublic'))
 				
