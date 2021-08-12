@@ -33,9 +33,14 @@ with open(Input,"r",encoding="utf8") as f:
 			elif (ipaddress.ip_address(r[3]).is_private):
 				writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],r[6],'Private'))
 			else:
-				obj = IPWhois(r[3])
-				res=obj.lookup_whois(ignore_referral_errors=True)
-				as_unkn= res['asn']
-				writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],as_unkn,'UnknownPublic'))
-				
+				try:
+					obj = IPWhois(r[3])
+					res=obj.lookup_whois(ignore_referral_errors=True,asn_methods=['whois'])
+					as_unkn= res['asn']
+					writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],as_unkn,'UnknownPublic'))
+					
+				except:
+					asnn=float(r[6])
+					writer.writerow((r[0],r[1],r[2],r[3],r[5],r[6],int(asnn),'Private'))
+
 
