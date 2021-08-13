@@ -16,7 +16,7 @@ from tqdm import tqdm
 import ipinfo
 from ipwhois.net import Net
 from ipwhois.asn import IPASN
-from pandarallel import pandarallel
+#from pandarallel import pandarallel
 import swifter
 import gc
 
