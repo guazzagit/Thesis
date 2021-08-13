@@ -17,29 +17,16 @@ import ipinfo
 from ipwhois.net import Net
 from ipwhois.asn import IPASN
 #from pandarallel import pandarallel
-import swifter
+#import swifter
 import gc
-import dask.dataframe as dd
-from dask.base import compute
-import dask.multiprocessing
-from functools import partial
-dask.config.set(scheduler='processes')
+#import dask.dataframe as dd
+#from dask.base import compute
+#import dask.multiprocessing
+#from functools import partial
+#dask.config.set(scheduler='processes')
 from multiprocesspandas import applyparallel
 
-access_token = '0cc281a1f8ebe8'
-#handler = ipinfo.getHandler(access_token)
-#pandarallel.initialize()
 
-def convert_ipv4(ip):
-    return tuple(int(n) for n in ip.split('.'))
-def convert_ipv6(ip):
-    return tuple(str(n) for n in ip.split(':'))
-
-def check_ipv4_in(addr, start, end):
-    return convert_ipv4(start) < convert_ipv4(addr) < convert_ipv4(end)
-
-def check_ipv6_in(addr, start, end):
-	return convert_ipv6(start) < convert_ipv6(addr) < convert_ipv6(end)
 
 Input = sys.argv[1]
 Output = sys.argv[2]
@@ -89,17 +76,6 @@ def myfunc(self):
 				Type = 'Private'
 		writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
 		out.close()
-
-
-def _apply_df(data_split):
-    return data_split.apply(myfunc,axis=1)
-    
-
-def apply_by_multiprocessing(df,func,**kwargs):
-  workers=kwargs.pop('workers')
-  pool = multiprocessing.Pool(processes=workers)
-  result = pool.map(_apply_df, [(d, func, i, kwargs) for i,d in enumerate(np.array_split(df, workers))])  
-  pool.close()
 
 
 with open(Output,"a",newline='') as out:
