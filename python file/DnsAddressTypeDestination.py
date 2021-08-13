@@ -16,11 +16,12 @@ from tqdm import tqdm
 import ipinfo
 from ipwhois.net import Net
 from ipwhois.asn import IPASN
-
+from pandarallel import pandarallel
+import swifter
 
 access_token = '0cc281a1f8ebe8'
-handler = ipinfo.getHandler(access_token)
-
+#handler = ipinfo.getHandler(access_token)
+#pandarallel.initialize()
 
 def convert_ipv4(ip):
     return tuple(int(n) for n in ip.split('.'))
@@ -48,34 +49,40 @@ df['Type']=""
 
 
 def myfunc(self):
-	
+
+
 	if (self['dst_addr'] in FamousDNS['ip'].values):
 		pos=np.where(FamousDNS["ip"]==self['dst_addr'])
 		as_pub=FamousDNS.iloc[pos[0][0],0]
-		df['ASN_dest'] = as_pub
-		df['Type'] = 'Public'
+		self['ASN_dest'] = as_pub
+		self['Type'] = 'Public'
+
 
 	elif (ipaddress.ip_address(self['dst_addr']).is_private):
-		df['ASN_dest'] = self['asn_v4']
-		df['Type'] = 'Private'
+		self['ASN_dest'] = self['asn_v4']
+		self['Type'] = 'Private'
 	else:
 		try:
 			net = Net(self['dst_addr'])
 			obj = IPASN(net)
 			results = obj.lookup(retry_count=0,asn_methods=['whois'])
 			as_unkn= results['asn']
-			df['ASN_dest'] = as_unkn
-			df['Type'] = 'UnknownPublic'
+			self['ASN_dest']= as_unkn
+			self['Type'] = 'UnknownPublic'
+			#print(self['Type'])
+			#writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],self['ASN_dest'],self['Type']))
 
 		except:
 			asnn=float(self['asn_v4'])
-			df['ASN_dest'] = asnn
-			df['Type'] = 'Private'
+			self['ASN_dest'] = asnn
+			self['Type'] = 'Private'
+	writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],self['ASN_dest'],self['Type']))
 
 	 
-
-
-print('start')
-df.apply(myfunc,axis=1)
-df.to_csv(Output, index=False)
-print("end")
+with open(Output,"a",newline='') as out:
+	writer = csv.writer(out)
+	writer.writerow(['prb_id,timestamp,resultset.result.rt,dst_addr,country_code,asn_v4,ASN_dest,Type'])
+	print('start')
+	df.swifter.apply(myfunc,axis=1)
+	#df.to_csv(Output, index=False)
+	print("end")
