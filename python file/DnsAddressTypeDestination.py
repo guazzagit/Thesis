@@ -22,7 +22,7 @@ import gc
 import dask.dataframe as dd
 from dask.base import compute
 import dask.multiprocessing
-dask.config.set(scheduler='threads')
+dask.config.set(scheduler='processes')
 
 
 access_token = '0cc281a1f8ebe8'
@@ -100,7 +100,7 @@ with open(Output,"a",newline='') as out:
 	writer = csv.writer(out)
 	writer.writerow(['prb_id,timestamp,resultset.result.rt,dst_addr,country_code,asn_v4,ASN_dest,Type'])
 	print('start')
-	df.compute().apply(myfunc, axis=1)
+	df.compute(num_workers=2).apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
 	print("end")
       
