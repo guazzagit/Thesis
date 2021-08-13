@@ -30,6 +30,7 @@ from multiprocesspandas import applyparallel
 
 Input = sys.argv[1]
 Output = sys.argv[2]
+Input3 = sys.argv[3]
 FamousDNS = pd.read_csv("FamousDNS_addr.csv")
 #priv_pub_ip2asn = pd.read_csv("ip2asn-combined.csv")
 #ipv4=pd.read_csv("ip2asn-v4.csv")
@@ -87,7 +88,7 @@ with open(Output,"a",newline='') as out:
 	#pool = mp.Pool(10)	
 	#pool.map(_apply_df, data_split)
 	#pool.close()
-	df.apply_parallel(myfunc, num_processes=30, axis=0)
+	df.apply_parallel(myfunc, num_processes=Input3, axis=0)
 	#df.apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
 	print("end")
