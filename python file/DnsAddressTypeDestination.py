@@ -78,6 +78,7 @@ def myfunc(self):
 		out.close()
 		del self
 		gc.collect()
+		return 0
 
 
 with open(Output,"a",newline='') as out:
