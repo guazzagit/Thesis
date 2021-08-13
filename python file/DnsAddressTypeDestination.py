@@ -22,7 +22,7 @@ import gc
 import dask.dataframe as dd
 from dask.base import compute
 import dask.multiprocessing
-dask.config.set(scheduler='processes')
+dask.config.set(scheduler='threads')
 
 
 access_token = '0cc281a1f8ebe8'
