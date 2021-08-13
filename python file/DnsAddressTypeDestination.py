@@ -76,6 +76,8 @@ def myfunc(self):
 				Type = 'Private'
 		writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
 		out.close()
+		del self
+		gc.collect()
 
 
 with open(Output,"a",newline='') as out:
