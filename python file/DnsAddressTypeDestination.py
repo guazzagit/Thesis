@@ -19,6 +19,11 @@ from ipwhois.asn import IPASN
 #from pandarallel import pandarallel
 import swifter
 import gc
+import dask.dataframe as dd
+from dask.base import compute
+import dask.multiprocessing
+dask.config.set(scheduler='processes')
+
 
 access_token = '0cc281a1f8ebe8'
 #handler = ipinfo.getHandler(access_token)
@@ -41,7 +46,7 @@ FamousDNS = pd.read_csv("FamousDNS_addr.csv")
 #priv_pub_ip2asn = pd.read_csv("ip2asn-combined.csv")
 #ipv4=pd.read_csv("ip2asn-v4.csv")
 #ipv6=pd.read_csv("ip2asn-v6.csv")
-df = pd.read_csv(Input) #,parse_dates=['timestamp']
+df = dd.read_csv(Input) #,parse_dates=['timestamp']
 #read csv cosi leggiamo tutto da li e via il discorso di asn dei famosi.
 #prb_id,timestamp,resultset.result.rt,dst_addr,subid,country_code,asn_v4
 #fieldnames = ['prb_id','timestamp','resultset.result.rt','dst_addr','country_code','asn_v4','ASN_dest,Type']
@@ -50,7 +55,6 @@ df['Type']=""
 
 
 def myfunc(self):
-
 
 	if (self['dst_addr'] in FamousDNS['ip'].values):
 		pos=np.where(FamousDNS["ip"]==self['dst_addr'])
@@ -78,14 +82,25 @@ def myfunc(self):
 			ASN_dest = asnn
 			Type = 'Private'
 	writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
-	del self
-	gc.collect()
+
+
+
+def _apply_df(args):
+    df.apply(myfunc,axis=1)
+
+def apply_by_multiprocessing(df,func,**kwargs):
+  workers=kwargs.pop('workers')
+  pool = multiprocessing.Pool(processes=workers)
+  result = pool.map(_apply_df, [(d, func, i, kwargs) for i,d in enumerate(np.array_split(df, workers))])  
+  pool.close()
+
 
 	 
 with open(Output,"a",newline='') as out:
 	writer = csv.writer(out)
 	writer.writerow(['prb_id,timestamp,resultset.result.rt,dst_addr,country_code,asn_v4,ASN_dest,Type'])
 	print('start')
-	df.swifter.apply(myfunc,axis=1)
+	df.compute().apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
 	print("end")
+      
