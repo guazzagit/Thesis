@@ -87,7 +87,7 @@ with open(Output,"a",newline='') as out:
 	#pool = mp.Pool(10)	
 	#pool.map(_apply_df, data_split)
 	#pool.close()
-	df.apply_parallel(myfunc, num_processes=700, axis=0)
+	df.apply_parallel(myfunc, num_processes=200, axis=0)
 	#df.apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
 	print("end")
