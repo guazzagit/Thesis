@@ -16,8 +16,9 @@ from tqdm import tqdm
 import ipinfo
 from ipwhois.net import Net
 from ipwhois.asn import IPASN
-#from pandarallel import pandarallel
+from pandarallel import pandarallel
 import swifter
+import gc
 
 access_token = '0cc281a1f8ebe8'
 #handler = ipinfo.getHandler(access_token)
@@ -54,29 +55,31 @@ def myfunc(self):
 	if (self['dst_addr'] in FamousDNS['ip'].values):
 		pos=np.where(FamousDNS["ip"]==self['dst_addr'])
 		as_pub=FamousDNS.iloc[pos[0][0],0]
-		self['ASN_dest'] = as_pub
-		self['Type'] = 'Public'
+		ASN_dest= as_pub
+		Type= 'Public'
 
 
 	elif (ipaddress.ip_address(self['dst_addr']).is_private):
-		self['ASN_dest'] = self['asn_v4']
-		self['Type'] = 'Private'
+		ASN_dest = self['asn_v4']
+		Type= 'Private'
 	else:
 		try:
 			net = Net(self['dst_addr'])
 			obj = IPASN(net)
 			results = obj.lookup(retry_count=0,asn_methods=['whois'])
 			as_unkn= results['asn']
-			self['ASN_dest']= as_unkn
-			self['Type'] = 'UnknownPublic'
+			ASN_dest= as_unkn
+			Type= 'UnknownPublic'
 			#print(self['Type'])
 			#writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],self['ASN_dest'],self['Type']))
 
 		except:
 			asnn=float(self['asn_v4'])
-			self['ASN_dest'] = asnn
-			self['Type'] = 'Private'
-	writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],self['ASN_dest'],self['Type']))
+			ASN_dest = asnn
+			Type = 'Private'
+	writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
+	del self
+	gc.collect()
 
 	 
 with open(Output,"a",newline='') as out:
