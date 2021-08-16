@@ -78,7 +78,7 @@ def myfunc(self):
 		return 0
 
 
-df = pd.read_csv(Input)
+df = pd.read_csv(Input, nrows=300)
 #df['ASN_dest']=""
 #df['Type']=""
 
