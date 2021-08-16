@@ -33,13 +33,10 @@ Output = sys.argv[2]
 FamousDNS = pd.read_csv("FamousDNS_addr.csv")
 #priv_pub_ip2asn = pd.read_csv("ip2asn-combined.csv")
 #ipv4=pd.read_csv("ip2asn-v4.csv")
-#ipv6=pd.read_csv("ip2asn-v6.csv")
-df = pd.read_csv(Input) #,parse_dates=['timestamp']
+#ipv6=pd.read_csv("ip2asn-v6.csv") #,parse_dates=['timestamp']
 #read csv cosi leggiamo tutto da li e via il discorso di asn dei famosi.
 #prb_id,timestamp,resultset.result.rt,dst_addr,subid,country_code,asn_v4
 #fieldnames = ['prb_id','timestamp','resultset.result.rt','dst_addr','country_code','asn_v4','ASN_dest,Type']
-df['ASN_dest']=""
-df['Type']=""
 
 
 def myfunc(self):
@@ -80,6 +77,10 @@ def myfunc(self):
 		gc.collect()
 		return 0
 
+
+df = pd.read_csv(Input)
+#df['ASN_dest']=""
+#df['Type']=""
 
 with open(Output,"a",newline='') as out:
 	writer = csv.writer(out)
