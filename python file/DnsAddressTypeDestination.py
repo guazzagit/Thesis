@@ -83,7 +83,7 @@ with open(Output,"a",newline='') as out:
 print('start')
 number_lines = sum(1 for row in (open(Input)))
 
-rowsize = 100000
+rowsize = 500000
 for i in range(1,number_lines,rowsize):
 
 	df = pd.read_csv(Input,header=None,nrows = rowsize,skiprows = i)
@@ -94,7 +94,7 @@ for i in range(1,number_lines,rowsize):
 	#pool = mp.Pool(10)	
 	#pool.map(_apply_df, data_split)
 	#pool.close()
-	df.apply_parallel(myfunc, num_processes=40, axis=0)
+	df.apply_parallel(myfunc, num_processes=48, axis=0)
 	#df.apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
 	del df
