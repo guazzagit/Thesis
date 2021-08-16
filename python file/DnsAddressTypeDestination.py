@@ -42,22 +42,22 @@ FamousDNS = pd.read_csv("FamousDNS_addr.csv")
 def myfunc(self):
 	with open(Output,"a",newline='') as out:
 		writer = csv.writer(out)
-		if (self['dst_addr'] in FamousDNS['ip'].values):
-			pos=np.where(FamousDNS["ip"]==self['dst_addr'])
+		if (self[3] in FamousDNS['ip'].values):
+			pos=np.where(FamousDNS["ip"]==self[3])
 			as_pub=FamousDNS.iloc[pos[0][0],0]
 			ASN_dest= as_pub
 			Type= 'Public'
 			#writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
 
 
-		elif (ipaddress.ip_address(self['dst_addr']).is_private):
-			ASN_dest = self['asn_v4']
+		elif (ipaddress.ip_address(self[3]).is_private):
+			ASN_dest = self[6]
 			Type= 'Private'
 			#writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
 
 		else:
 			try:
-				net = Net(self['dst_addr'])
+				net = Net(self[3])
 				obj = IPASN(net)
 				results = obj.lookup(retry_count=0,asn_methods=['whois'])
 				as_unkn= results['asn']
@@ -68,26 +68,26 @@ def myfunc(self):
 				#writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],self['ASN_dest'],self['Type']))
 
 			except:
-				asnn=float(self['asn_v4'])
+				asnn=float(self[6])
 				ASN_dest = asnn
 				Type = 'Private'
-		writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
+		writer.writerow((self[0],self[1],self[2],self[3],self[5],self[6],ASN_dest,Type))
 		out.close()
-		del self
-		gc.collect()
-		return 0
 
-
-df = pd.read_csv(Input, nrows=300)
-#df['ASN_dest']=""
-#df['Type']=""
 
 with open(Output,"a",newline='') as out:
-	writer = csv.writer(out)
-	writer.writerow(['prb_id,timestamp,resultset.result.rt,dst_addr,country_code,asn_v4,ASN_dest,Type'])
-	out.close()
+		writer = csv.writer(out)
+		writer.writerow(['prb_id,timestamp,resultset.result.rt,dst_addr,country_code,asn_v4,ASN_dest,Type'])
+		out.close()
+print('start')
+number_lines = sum(1 for row in (open(Input)))
 
-	print('start')
+rowsize = 500000
+for i in range(1,number_lines,rowsize):
+
+	df = pd.read_csv(Input,header=None,nrows = rowsize,skiprows = i)
+	#df['ASN_dest']=""
+	#df['Type']=""
 	#data_split = np.array_split(df, 10)
 	#pool = mp.Pool(10)	
 	#pool.map(_apply_df, data_split)
@@ -95,5 +95,7 @@ with open(Output,"a",newline='') as out:
 	df.apply_parallel(myfunc, num_processes=20, axis=0)
 	#df.apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
-	print("end")
-      
+	del df
+	gc.collect()
+
+print("end")
