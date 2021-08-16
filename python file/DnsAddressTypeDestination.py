@@ -82,7 +82,7 @@ with open(Output,"a",newline='') as out:
 print('start')
 number_lines = sum(1 for row in (open(Input)))
 
-rowsize = 2000000
+rowsize = 2500000
 for i in range(1,number_lines,rowsize):
 
 	df = pd.read_csv(Input,header=None,nrows = rowsize,skiprows = i)
