@@ -87,7 +87,7 @@ rowsize = 500000
 for i in range(1,number_lines,rowsize):
 
 	df = pd.read_csv(Input,header=None,nrows = rowsize,skiprows = i)
-	#print("chuck_read_ok")
+	print("chuck_read_ok")
 	#df['ASN_dest']=""
 	#df['Type']=""
 	#data_split = np.array_split(df, 10)
