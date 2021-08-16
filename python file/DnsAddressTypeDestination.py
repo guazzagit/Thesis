@@ -30,7 +30,8 @@ from multiprocesspandas import applyparallel
 
 Input = sys.argv[1]
 Output = sys.argv[2]
-FamousDNS = pd.read_csv("FamousDNS_addr.csv")
+#FamousDNS = pd.read_csv("FamousDNS_addr.csv")
+dict_from_csv = pd.read_csv('FamousDNS_addr.csv', index_col=1, squeeze=True).to_dict()
 #priv_pub_ip2asn = pd.read_csv("ip2asn-combined.csv")
 #ipv4=pd.read_csv("ip2asn-v4.csv")
 #ipv6=pd.read_csv("ip2asn-v6.csv") #,parse_dates=['timestamp']
@@ -42,10 +43,10 @@ FamousDNS = pd.read_csv("FamousDNS_addr.csv")
 def myfunc(self):
 	with open(Output,"a",newline='') as out:
 		writer = csv.writer(out)
-		if (self[3] in FamousDNS['ip'].values):
-			pos=np.where(FamousDNS["ip"]==self[3])
-			as_pub=FamousDNS.iloc[pos[0][0],0]
-			ASN_dest= as_pub
+		if self[3] in dict_from_csv.keys():
+			#pos=np.where(FamousDNS["ip"]==self[3])
+			#as_pub=FamousDNS.iloc[pos[0][0],0]
+			ASN_dest= dict_from_csv[self[3]]
 			Type= 'Public'
 			#writer.writerow((self['prb_id'],self['timestamp'],self['resultset.result.rt'],self['dst_addr'],self['country_code'],self['asn_v4'],ASN_dest,Type))
 
@@ -82,7 +83,7 @@ with open(Output,"a",newline='') as out:
 print('start')
 number_lines = sum(1 for row in (open(Input)))
 
-rowsize = 600000
+rowsize = 100000
 for i in range(1,number_lines,rowsize):
 
 	df = pd.read_csv(Input,header=None,nrows = rowsize,skiprows = i)
