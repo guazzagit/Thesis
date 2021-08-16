@@ -97,5 +97,6 @@ for i in range(1,number_lines,rowsize):
 	#df.to_csv(Output, index=False)
 	del df
 	gc.collect()
+	print(chunk_done)
 
 print("end")
