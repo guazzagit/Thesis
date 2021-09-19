@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 svn_id = "$Id:$"
 
 # version 0.2
@@ -342,21 +343,21 @@ def main(args):
 							result['b64decode_failures'] += 1;
 
 						if babuf:
-							print("c'è")
+							#print("c'è")
 							adata  = decode_abuf(babuf, options) #, result)
 							
 							#print(adata['EDNS0']['Option']['NSID'])
 							#print('ok fin qui il main sembra andare')
 							if adata:
-								print("sempre")
+								#print("sempre")
 								if 'EDNS0' in adata:
 									if 'Option' in adata['EDSON0']:
 										if 'NSID' in adata['EDNS0']['Option']['NSID']:
-											print("c'è")
+											#print("c'è")
 											data['result']['abuf']=adata['EDNS0']['Option']['NSID']
 
 								else:
-									print("c'è2")
+									#print("c'è2")
 									data['result']['abuf']="empty"
 								if 'ERROR' in data:
 									result['decodedabufs_with_ERROR'] += 1
@@ -374,11 +375,11 @@ def main(args):
 					result['errorFindingDecodingabuf'] += 1
 
 				if args.formattedJSON:
-					print (json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
+					#print (json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
 					f.write(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
 					f.write('\n')
 				else:
-					print (json.dumps(data))
+					#print (json.dumps(data))
 					f.write(json.dumps(data))
 					f.write('\n')
 
@@ -403,11 +404,11 @@ def main(args):
 				if data:
 					if 'ERROR' in data:
 						result['decodedabufs_with_ERROR'] += 1
-					if args.formattedJSON:
-						print (json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
+					#if args.formattedJSON:
+						#print (json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
 
-					else:
-						print (json.dumps(data))
+					#else:
+						#print (json.dumps(data))
 
 						#print "data", data
 				else:
@@ -417,8 +418,8 @@ def main(args):
 
 		if args.verbosity:
 			import string
-			print ("#======== results:\n#",lines = json.dumps(result, sort_keys=True, indent=4, separators=(',', ': ')))
-			print (string.replace(lines, "\n", "\n#")) # we want this to be comments lines on stdout)
+			#print ("#======== results:\n#",lines = json.dumps(result, sort_keys=True, indent=4, separators=(',', ': ')))
+			#print (string.replace(lines, "\n", "\n#")) # we want this to be comments lines on stdout)
 			#      print json.dumps(result, sort_keys=True, indent=4, separators=(',', ': '))
 		sys.stdout.flush()
 

@@ -1,0 +1,18 @@
+#!/bin/bash
+Input1="$1"
+Input2="$2"
+Input3="$3"
+Input4="$4"
+EXT2=".csv"
+EXT3=".mat"
+
+matlab -nodisplay -nodesktop -r PlotEuropePING "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotEuropePING "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotEurope90PercentPING "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotEurope90PercentPING "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountryPING "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountryPING "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountry90PercentPING "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountry90PercentPING "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotErrorPing "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotErrorPing "$Input1$EXT2" "$Input4$EXT3"

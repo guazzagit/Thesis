@@ -1,0 +1,18 @@
+#!/bin/bash
+Input1="$1"
+Input2="$2"
+Input3="$3"
+Input4="$4"
+EXT2=".csv"
+EXT3=".mat"
+
+matlab -nodisplay -nodesktop -r PlotEurope "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotEurope "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotEurope90Percent "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotEurope90Percent "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountry.m "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountry.m "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountry90Percent "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r PlotCountry90Percent "$Input1$EXT2" "$Input4$EXT3"
+matlab -nodisplay -nodesktop -r plotError "$Input1$EXT2" "$Input3$EXT3"
+matlab -nodisplay -nodesktop -r plotError "$Input1$EXT2" "$Input4$EXT3"

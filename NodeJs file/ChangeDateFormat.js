@@ -6,11 +6,11 @@ var Output=argument[3];
 const editJsonFile = require("edit-json-file");
 const readline = require('readline');
 var dateFormat = require("dateformat");
-// If the file doesn't exist, the content will be an empty object by default.
+// 
 
 const lineReader = require('line-reader');
 console.log("Reorder data...");
-var fd = fs.openSync(Output,'a'); //per valore completto Dns23848289 per test = testdata1
+var fd = fs.openSync(Output,'a'); 
 console.log("Opening a new file..");
 console.log("Start append");
 
@@ -38,7 +38,7 @@ console.log("Start append");
 		//var stringArray = med.split("}{"); // divide 
 		//console.log(stringArray);
 		//let text = stringArray.join() +"\n"; // new line and add the lost bracket
-		var text = med +"\n"; // non va bene se lo porti in stringa poi da problemi per plottarli
+		var text = med +"\n"; // 
 			
       	const result = {
 // object with data inside

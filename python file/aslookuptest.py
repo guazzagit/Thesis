@@ -1,4 +1,4 @@
-import pandas as pd
+#import pandas as pd
 import csv
 from csv import DictReader, DictWriter
 import sys
@@ -17,7 +17,7 @@ import ipinfo
 from ipwhois.net import Net
 from ipwhois.asn import IPASN
 #from pandarallel import pandarallel
-#import swifter
+import swifter
 import gc
 #import dask.dataframe as dd
 #from dask.base import compute
@@ -25,8 +25,8 @@ import gc
 #from functools import partial
 #dask.config.set(scheduler='processes')
 from multiprocesspandas import applyparallel
-
-
+import modin.pandas as pd
+from distributed import Client
 
 Input = sys.argv[1]
 Output = sys.argv[2]
@@ -72,33 +72,34 @@ def myfunc(self):
 				asnn=float(self[6])
 				ASN_dest = asnn
 				Type = 'Private'
-		writer.writerow((self[3],ASN_dest,Type))
+		writer.writerow((self[0],self[1],self[2],self[3],self[5],self[6],ASN_dest,Type))
 		out.close()
 
 
 with open(Output,"a",newline='') as out:
 		writer = csv.writer(out)
-		writer.writerow(['dst_addr,ASN_dest,Type'])
+		writer.writerow(['prb_id,timestamp,resultset.result.rt,dst_addr,country_code,asn_v4,ASN_dest,Type'])
 		out.close()
 print('start')
 number_lines = sum(1 for row in (open(Input)))
 
-rowsize = 500000
-for i in range(1,number_lines,rowsize):
+client = Client()
+rowsize = 1000
+#for i in range(1,number_lines,rowsize):
 
-	df = pd.read_csv(Input, usecols=[3,6],header=None,nrows = rowsize,skiprows = i)
-	print("chuck_read_ok")
-	#df['ASN_dest']=""
-	#df['Type']=""
-	#data_split = np.array_split(df, 10)
-	#pool = mp.Pool(10)	
-	#pool.map(_apply_df, data_split)
-	#pool.close()
-	df.apply_parallel(myfunc, num_processes=30, axis=0)
-	#df.apply(myfunc, axis=1)
-	#df.to_csv(Output, index=False)
-	del df
-	gc.collect()
-	print("chunk_done")
+df = pd.read_csv(Input,header=None)
+print("chuck_read_ok")
+#df['ASN_dest']=""
+#df['Type']=""
+#data_split = np.array_split(df, 10)
+#pool = mp.Pool(10)	
+#pool.map(_apply_df, data_split)
+#pool.close()
+#df.apply_parallel(myfunc, num_processes=8, axis=0)
+#df.apply(myfunc, axis=1)
+#df.to_csv(Output, index=False)
+del df
+gc.collect()
+print("chunk_done")
 
 print("end")

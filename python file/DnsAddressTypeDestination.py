@@ -41,6 +41,22 @@ dict_from_csv = pd.read_csv('FamousDNS_addr.csv', index_col=1, squeeze=True).to_
 
 
 def myfunc(self):
+	import pandas as pd
+	import csv
+	import sys
+	import numpy as np
+	from csv import DictReader
+	from datetime import datetime
+	import ipaddress
+	from aslookup import get_as_data
+	import pyasn
+	from ipwhois import IPWhois
+	import multiprocessing as mp
+	from joblib import Parallel, delayed
+	from tqdm import tqdm
+	import ipinfo
+	from ipwhois.net import Net
+	from ipwhois.asn import IPASN
 	with open(Output,"a",newline='') as out:
 		writer = csv.writer(out)
 		if self[3] in dict_from_csv.keys():
@@ -83,7 +99,7 @@ with open(Output,"a",newline='') as out:
 print('start')
 number_lines = sum(1 for row in (open(Input)))
 
-rowsize = 500000
+rowsize = 50
 for i in range(1,number_lines,rowsize):
 
 	df = pd.read_csv(Input,header=None,nrows = rowsize,skiprows = i)
@@ -94,7 +110,7 @@ for i in range(1,number_lines,rowsize):
 	#pool = mp.Pool(10)	
 	#pool.map(_apply_df, data_split)
 	#pool.close()
-	df.apply_parallel(myfunc, num_processes=40, axis=0)
+	df.apply_parallel(myfunc, num_processes=8, axis=0)
 	#df.apply(myfunc, axis=1)
 	#df.to_csv(Output, index=False)
 	del df

@@ -1,8 +1,8 @@
 
 fs = require('fs');
 var argument = process.argv
-var Input=parseInt(argument[2]);
-var Output=parseInt(argument[3]);
+var Input=argument[2];
+var Output=argument[3];
 const lineReader = require('line-reader');
 console.log("Reorder data...");
 var fd = fs.openSync(Output,'a'); //per valore completto Dns23848289 per
@@ -20,7 +20,7 @@ lineReader.eachLine(Input, function(line,last) {
 	var value3= value3.replace(/\},\{"error"+/g,'}{"error"')
 	var stringArray = value3.split(",{"); // divide 
 	var text = stringArray.join('\n{')+"\n"; // new line and add the lost bracket
-	console.log(text);
+	//console.log(text);
 	var text2=text.replace(/}{/g,'},{')
 	fs.appendFile(fd, text2, function(err) {
 
