@@ -5,7 +5,4 @@ Input3="$3"
 Input4="$4"
 EXT2=".csv"
 EXT3=".mat"
-addpath'github_repo'
-addpath '/home/guazzelli/disco/file'
-addpath '/home/guazzelli/disco/Thesis/Matlab file'
 /usr/local/MATLAB/R2020b/bin/matlab -batch '/home/guazzelli/disco/Thesis/Matlab file/'PlotEuropePING "$Input1$EXT2" "$Input3$EXT3"

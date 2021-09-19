@@ -1,7 +1,7 @@
 function[]= PlotErrorPing(param1, param2)
-addpath 'github_repo'
-addpath '/home/guazzelli/disco/file'
-addpath '/home/guazzelli/disco/Thesis/Matlab file'
+addpath('github_repo');
+addpath('/home/guazzelli/disco/file');
+addpath('/home/guazzelli/disco/Thesis/Matlab file');
 T = readtable(param1); %% inserire qua il csv da plottare.
 G = findgroups(T{:,15});
 
