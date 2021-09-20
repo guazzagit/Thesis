@@ -6,5 +6,6 @@ EXT3=".mat"
 VIrg=","
 APP="'"
 SET PATH="/home/guazzelli/disco/Thesis/Matlab file/"
+ls
 echo "/home/guazzelli/disco/Thesis/Matlab file/PlotErrorPing($APP$Input1$EXT2$APP$VIrg $APP$Input2$EXT3$APP)"
 /usr/local/MATLAB/R2020b/bin/matlab -batch "PlotErrorPing($APP$Input1$EXT2$APP$VIrg $APP$Input2$EXT3$APP)"
