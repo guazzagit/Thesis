@@ -1,0 +1,10 @@
+#!/bin/bash
+Input1="$1"
+Input2="$2"
+EXT2=".csv"
+EXT3=".mat"
+VIrg=","
+APP="'"
+/usr/local/MATLAB/R2020b/bin/matlab -batch "BoxplotAsn_senzaBIn.m($APP$Input1$EXT2$APP$VIrg $APP$Input2$EXT3$APP)"
+/usr/local/MATLAB/R2020b/bin/matlab -batch "PlotASN_boxplot($APP$Input1$EXT2$APP$VIrg $APP$Input2$EXT3$APP)"
+/usr/local/MATLAB/R2020b/bin/matlab -batch "PlotASN_boxplot_90perc($APP$Input1$EXT2$APP$VIrg $APP$Input2$EXT3$APP)"

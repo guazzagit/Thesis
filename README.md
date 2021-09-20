@@ -21,6 +21,8 @@ Scripts:
 
 **ResponseTimeDHCP**: Takes input file2019DHCPpreprocessed, nations-prb_id matching file2019, file2020DHCPpreprocessed, nations-prb_id matching file 2020. Returns all median, 90th percentile and error plots as output. In addition returns the graphs of the 3 time slots analized (00-08,08-16,16-00).
 
+**Boxplot**: Takes input file2019DHCPpreprocessed, file2020DHCPpreprocessed both with info on ASN and Nations. Returns boxplot for median and 90 percentile and without aggregation.
+
 **Anomaly**: Takes as input the two files 2019 and 2020 in csv of the measurement with DHCP and returns the graphs per AS of the anomaly detection
 
 **ChangePoints**: It takes in the 2019 DHCP preprocessed file and the 2020 DHCP preprocessed file. Returns graphs showing where the mean varies most significantly.
