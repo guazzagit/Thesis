@@ -2,7 +2,7 @@ function[]= plotError(param1, param2)
 T = readtable(param1); %% inserire qua il csv da plottare.
 Country = readtable('ContryProbe.csv');
 load(param2) %% caricamento file di corrispondenza paesi probe
-G = findgroups(T{:,1});     
+G = findgroups(T{:,11});     
 Tc = splitapply( @(varargin) varargin, T, G);
 FileOut= split(param1,"_")
 FileOut2=split(FileOut{1},"/")
@@ -27,8 +27,8 @@ parfor (g=1:size(Nations,2),3)
         
         if cell2mat(Tc(b,5)) == Nations{g}
 
-            singlerow{1,1}=cell2mat(Tc(b,3))
-            singlerow{1,2}=Tc{b,2}
+            singlerow{1,1}=cell2mat(Tc(b,23))
+            singlerow{1,2}=Tc{b,15}
             %appoggio=[]
             tabellaPeso=[tabellaPeso;singlerow{1}]
             tabellaTempo=[tabellaTempo;singlerow{2}]
