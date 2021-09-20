@@ -24,4 +24,4 @@ ChangePoints: It takes in the 2019 DHCP preprocessed file and the 2020 DHCP prep
 
 AfricaEuropa:
 
-ISPPublicComparison:
+ISPPublicComparison: It takes in the DHCP 2019 preprocessed file and the DHCP 2019 preprocessed file, both with information on the type and ASN of the recipient address. Returns as output, graphs of AS divided by ISP, public DNS and with individual provider split for public AS.
