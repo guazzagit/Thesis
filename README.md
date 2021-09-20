@@ -30,3 +30,10 @@ Scripts:
 **AfricaEuropa**: It takes in the 2019 DHCP preprocessed file and the 2019 DHCP preprocessed file, both with ASN and country information. Outputs median and 90 percentile graphs for each continent and graphs with three time slots separation.
 
 **ISPPublicComparison**: It takes in the DHCP 2019 preprocessed file and the DHCP 2019 preprocessed file, both with information on the type and ASN of the recipient address. Returns as output, graphs of AS divided by ISP, public DNS and with individual provider split for public AS.
+
+
+
+required python libraries in: requirements.txt
+
+Matlab module used for saving plot:
+https://www.mathworks.com/matlabcentral/fileexchange/23629-export_fig
