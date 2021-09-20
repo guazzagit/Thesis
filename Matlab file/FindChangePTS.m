@@ -10,19 +10,19 @@ Nations={'ES','FR','IT','SE','DE'}
 
 AFRica={'ZA','SN','MA','DZ','LY','SD','EG'}
 
-IndiciRegion=find(ismember(T{:,4},Nations))%trovo indici per dove sono le regfioni che voglio
+IndiciRegion=find(ismember(T{:,6},Nations))%trovo indici per dove sono le regfioni che voglio
 T=T(IndiciRegion,:)
-G = findgroups(T{:,5});     
+G = findgroups(T{:,7});     
 Tc = splitapply( @(varargin) varargin, T, G);
 asn_id=cellfun(@unique,Tc(:,1),'UniformOutput',false) % asn unici
 [cellsz1, cellsz2] = cellfun(@size,asn_id,'UniformOutput',false); %dimensione di ciascun gruppo
 conv=cell2mat(cellsz1)
 idxd=find(conv>10) %trovo le posizioni dei magg di 10
-%Tc(:,6)=cellsz1(:,1)
+%Tc(:,8)=cellsz1(:,1)
 Tc2=Tc(idxd,:) % isolo solo quelli con più di 1o probe
 
 [numRows2,numCols2] = size(Tc2)
-regions=cellfun(@unique,Tc2(:,4),'UniformOutput',false)
+regions=cellfun(@unique,Tc2(:,6),'UniformOutput',false)
 
 ASNnumUSERNationsonly=readtable('asn_people_nations_new.csv')
 IndiciRegionASN=find(ismember(ASNnumUSERNationsonly{:,3},Nations))
@@ -31,39 +31,40 @@ tabellaNumeriUser = groupsummary(ASNnumUSERNationsonly,'ASN','sum','Users_est__'
 
 
 for b=1:numRows2
-    Tc2(b,4)=unique(Tc2{b,4})
-    Tc2{b,5}=unique(Tc2{b,5})
+    Tc2(b,6)=unique(Tc2{b,7})
+    Tc2{b,7}=unique(Tc2{b,7})
 end
 for b=1:numRows2
-    PostASn=find(Tc2{b,5}==tabellaNumeriUser{:,1})
-    Tc2{b,6}=tabellaNumeriUser{PostASn,3}
+    PostASn=find(Tc2{b,7}==tabellaNumeriUser{:,1})
+    Tc2{b,8}=tabellaNumeriUser{PostASn,3}
 end
 %con il for metto info su asn e regione di cciscun gruppo.
 %secondatabella
 T=[]
 
 T = readtable(param2); %% inserire qua il csv da plottare.
-IndiciRegion=find(ismember(T{:,4},Nations))%trovo indici per dove sono le regfioni che voglio
+IndiciRegion=find(ismember(T{:,6},Nations))%trovo indici per dove sono le regfioni che voglio
 T=T(IndiciRegion,:)
-G = findgroups(T{:,5});     
+G = findgroups(T{:,7});     
 Tc = splitapply( @(varargin) varargin, T, G);
 asn_id=cellfun(@unique,Tc(:,1),'UniformOutput',false) % asn unici
 [cellsz1, cellsz2] = cellfun(@size,asn_id,'uni',false); %dimensione di ciascun gruppo
 conv=cell2mat(cellsz1)
 idxd=find(conv>10) %trovo le posizioni dei magg di 10
-%Tc(:,6)=cellsz1(:,1)
+%Tc(:,8)=cellsz1(:,1)
 Tc22=Tc(idxd,:)
 [numRows2,numCols2] = size(Tc22)
 for b=1:numRows2
-    Tc22(b,4)=unique(Tc22{b,4})
-    Tc22{b,5}=unique(Tc22{b,5})
+    Tc22(b,6)=unique(Tc22{b,6})
+    Tc22{b,7}=unique(Tc22{b,7})
 
 end
 for b=1:numRows2
-    PostASn=find(Tc22{b,5}==tabellaNumeriUser{:,1})
-    Tc22{b,6}=tabellaNumeriUser{PostASn,3}
+    PostASn=find(Tc22{b,7}==tabellaNumeriUser{:,1})
+    Tc22{b,8}=tabellaNumeriUser{PostASn,3}
 end
 %solo i primi 6 mesi del 2020
+Tc22Copy=Tc22;
 for v=1:size(Tc22,1)
     primi6=find(Tc22{v,2}<='2020-06-30 23:55:55')
     Tc22{v,2}=Tc22{v,2}(primi6,1)
@@ -76,8 +77,8 @@ T=[]
 
 [Rows,Cols] = size(Tc2)
 for j = 1:size(Nations,2)%dim nazioni poi
-        idf=find(ismember(Tc2(:,4), Nations(j))) %trovo gli indici della nazione j
-        idf2=find(ismember(Tc22Copy(:,4), Nations(j))) %trovo gli indici della nazione j
+        idf=find(ismember(Tc2(:,6), Nations(j))) %trovo gli indici della nazione j
+        idf2=find(ismember(Tc22Copy(:,6), Nations(j))) %trovo gli indici della nazione j
         Tc3=Tc2(idf,:)
         Tc4=Tc22Copy(idf2,:)
             % c'è completo quando lo smezzo di 6 mesi sennò ricorda di
